@@ -53,7 +53,7 @@
           "icone": "video",
           "titulo": "Gerar",
           "sub": "imagem e clipe",
-          "detalhe": "docflow gerar faz imagens e clipes pelo motor escolhido no tema (flow, agnes ou local). É geração de vídeo: fora da prática. Sem gerador, estatica troca o clipe por imagem com zoom lento."
+          "detalhe": "docflow gerar faz imagens e clipes pelo motor escolhido no tema (flow, agnes, reais ou historia; o \"local\" do comentário do egito.yaml não está implementado no commit f1ed75e). É geração de vídeo: fora da prática. Sem gerador, estatica troca o clipe por imagem com zoom lento."
         },
         {
           "icone": "megafone",
@@ -87,11 +87,11 @@
         "abas": [
           {
             "rot": "Saída capturada (19/10/2026)",
-            "html": "<pre>0.8.0\ndocflow 0.8.0 · estilos (use `estilo: &lt;nome&gt;` no tema)\n\n  documentario\n    Documentário narrado com cenas geradas por IA (imagem -&gt; vídeo), ritmo calmo.\nslug: egito-antigo\nestilo: \"realistic cinematic documentary, natural golden light, 35mm film look\"\nduracao_total: 60\nduracao_cena: 10\nformato: \"16:9\"\nmotor: agnes          # flow | agnes | local\nvoz: nei              # voz do inemavox (chatterbox): nei, nei2, bella...</pre><p>O motor e a voz ficam no tema, não no código: trocar de gerador é trocar uma linha. A duração total dividida pela duração da cena dá o número de cenas (60 ÷ 10 = 6).</p>"
+            "html": "<pre>0.8.0\ndocflow 0.8.0 · estilos (use `estilo: &lt;nome&gt;` no tema)\n\n  documentario\n    Documentário narrado com cenas geradas por IA (imagem -&gt; vídeo), ritmo calmo.\nslug: egito-antigo\nestilo: \"realistic cinematic documentary, natural golden light, 35mm film look\"\nduracao_total: 60\nduracao_cena: 10\nformato: \"16:9\"\nmotor: agnes          # flow | agnes | local\nvoz: nei              # voz do inemavox (chatterbox): nei, nei2, bella...</pre><p>O motor e a voz ficam no tema, não no código. Atenção: <code>voz: nei</code> é a voz clonada do próprio Nei, usada com o consentimento dele. Na sua cópia, troque por uma voz de banco ou pela sua, com termo (aula 7). A duração total dividida pela duração da cena dá o número de cenas (60 ÷ 10 = 6).</p>"
           },
           {
             "rot": "Cuidado com o publicar",
-            "html": "<p>No commit f1ed75e, <code>docflow publicar</code> chama o yt-pubx em ensaio (dry-run), mas, se ainda não houver <code>thumb.jpg</code> na pasta do vídeo, o yt-pubx pede título e capa ao Codex. Ensaio de publicação sem modelo é na aula 8.</p>"
+            "html": "<p>No commit f1ed75e, <code>docflow publicar</code> chama o yt-pubx em ensaio (dry-run), mas, se ainda não houver <code>thumb.jpg</code> na pasta do vídeo, o yt-pubx pede ao Codex a frase e a cena da capa. Ensaio de publicação sem modelo é na aula 8.</p>"
           }
         ]
       }
@@ -170,7 +170,7 @@
         {
           "titulo": "Crédito da fonte",
           "texto": [
-            "O motor só põe crédito ao autor da referência se o pedido disser. Decida isso no pedido, por escrito, antes de começar."
+            "O motor, como está, não credita a referência sozinho: só se o pedido disser. Recomendação do curso: dê crédito por padrão, e use print de vídeo de outra pessoa só com licença ou uso permitido."
           ]
         }
       ]
@@ -198,8 +198,8 @@
           "id": "e3",
           "titulo": "E3 · O seu tema",
           "min": "15 min",
-          "texto": "Copie temas/egito.yaml para <code>temas/meu-tema.yaml</code> no clone do ensaio e troque slug, tema, estilo e as durações para um documentário seu de 6 a 8 cenas. Não rode roteiro nem gerar.",
-          "pronto": "<code>cd /tmp/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas')\"</code> → o seu slug e um número de 6 a 8 seguido de <code>cenas</code>."
+          "texto": "Copie temas/egito.yaml para <code>temas/meu-tema.yaml</code> no clone do ensaio e troque slug, tema, estilo, voz e as durações para um documentário seu de 6 a 8 cenas. Não rode roteiro nem gerar.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas')\"</code> → o seu slug e um número de 6 a 8 seguido de <code>cenas</code>."
         }
       ]
     },
@@ -252,7 +252,7 @@
       "itens": [
         {
           "t": "Tema",
-          "texto": "no docflow você escreve o YAML; motor e voz são uma linha cada."
+          "texto": "no docflow você escreve o YAML; motor e voz (a sua, com termo) são uma linha cada."
         },
         {
           "t": "Deixa",

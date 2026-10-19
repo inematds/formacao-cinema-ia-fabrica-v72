@@ -41,20 +41,20 @@
           "icone": "arquivo",
           "titulo": "Cenas",
           "sub": "JSON",
-          "detalhe": "Uma lista de cenas com title, chapter, speech (a fala), labels (até três rótulos de tela), takeaway e source. O agente escreve; você revisa."
+          "detalhe": "Uma lista de cenas com title, chapter, speech (a fala), labels (os rótulos de tela), takeaway e source. O agente escreve; você revisa."
         },
         {
           "icone": "fila",
           "titulo": "Blocos",
           "sub": "prepare",
-          "detalhe": "O prepare junta cenas inteiras em blocos até o limite max_chars (padrão 4.400 caracteres) e grava blocos/manifest.json. Nenhuma fala é cortada no meio."
+          "detalhe": "O prepare junta cenas inteiras em blocos até o limite max_chars (4.400 no --help e em todos os exemplos) e grava blocos/manifest.json. Nenhuma fala é cortada no meio."
         },
         {
           "icone": "portao",
           "titulo": "Estúdio",
           "sub": "crédito",
           "forte": true,
-          "detalhe": "Cada bloco vira um vídeo de avatar no estúdio do HeyGen, pela assinatura de quem é dono do avatar. É o único passo que gasta crédito, e só roda com o comando start."
+          "detalhe": "Cada bloco vira um vídeo de avatar no estúdio do HeyGen, pela assinatura de quem é dono do avatar. É o único passo que gasta crédito, e só roda com o comando start. No commit 604fc74 quem gera é um script Playwright no estúdio web, com o perfil e a tela virtual do ambiente do dono: em outra máquina, o start não roda sem adaptação."
         },
         {
           "icone": "megafone",
@@ -66,11 +66,11 @@
           "icone": "video",
           "titulo": "Render",
           "sub": "HyperFrames",
-          "detalhe": "Cada bloco vira uma composição HyperFrames com o avatar num canto, as cenas animadas e a legenda; depois os blocos são montados num MP4 só."
+          "detalhe": "No motor v1 (explica.py), cada bloco vira uma composição HyperFrames com o avatar num canto, as cenas e a legenda, e os blocos são montados num MP4. O v2 (engine/v2) refaz o visual por cima, reaproveitando avatar e transcrição do v1."
         }
       ],
       "volta": "o manifesto guarda onde parou",
-      "legenda": "Etapas lidas no README e no código do explicavideos 2.13.10 (commit 604fc74). HyperFrames por dentro é assunto do curso 3."
+      "legenda": "Etapas do motor v1, lidas no README e no código do explicavideos 2.13.10 (commit 604fc74). O prepare é a primeira etapa dos dois motores, v1 e v2. HyperFrames por dentro é assunto do curso 3."
     },
     {
       "tipo": "codigo",
@@ -195,7 +195,14 @@
         {
           "titulo": "Perfis",
           "texto": [
-            "Sem profile_visual, sai o perfil aula. Com \"profile_visual\": \"viral\", o perfil viral (cortes mais rápidos), conferido por <code>engine/v2/qa_viral.py</code>, que imprime APROVADO, APROVADO COM AVISO ou REPROVADO."
+            "Perfis são do v2: sem profile_visual, sai o perfil aula; com \"profile_visual\": \"viral\", o perfil viral (cortes mais rápidos), conferido por <code>engine/v2/qa_viral.py</code>, que imprime APROVADO, APROVADO COM AVISO ou REPROVADO."
+          ]
+        },
+        {
+          "titulo": "O v2 por cima",
+          "texto": [
+            "O v2 não gera avatar de novo: parte de uma produção v1 pronta e refaz o visual de cada bloco com um roteiro visual por deixas faladas, o mesmo conceito que o validador do refazvideo confere na aula 4.",
+            "Comandos do README (só descritos aqui, porque precisam da fala transcrita do avatar): <code>engine/v2/setup_output.py</code> → <code>engine/v2/build_block.py 1 --strict</code> → <code>engine/v2/run_lane.sh 1 2 3</code>."
           ]
         }
       ]
@@ -203,7 +210,7 @@
     {
       "tipo": "video",
       "titulo": "O que sai do motor",
-      "sub": "Um explicativo de 10 minutos feito pelo explicavideos, com avatar e voz do próprio Nei, em três idiomas.",
+      "sub": "Um explicativo de 10 minutos feito pelo explicavideos v2, com avatar e voz do próprio Nei (com o consentimento dele), em três idiomas.",
       "chave": "iacultivada"
     },
     {
@@ -229,8 +236,8 @@
           "id": "e3",
           "titulo": "E3 · O seu roteiro",
           "min": "15 min",
-          "texto": "Peça ao seu agente as cenas de um explicativo seu (5 a 8 cenas, cada fala com até 600 caracteres) no mesmo formato de cenas-pt.json. Grave em <code>/tmp/ensaio-fabrica/a2/minhas-cenas.json</code>, troque o scene_files da config e rode o prepare com max_chars 4400.",
-          "pronto": "<code>cd /tmp/ensaio-fabrica/a2/explicavideos && python3 explica.py --config ../ensaio.json prepare; echo \"saída: $?\"</code> → uma linha <code>{\"blocks\": …, \"scenes\": N, …}</code> com o N das suas cenas e <code>saída: 0</code>."
+          "texto": "Peça ao seu agente as cenas de um explicativo seu (5 a 8 cenas, cada fala com até 600 caracteres) no mesmo formato de cenas-pt.json. Grave em <code>${TMPDIR:-/tmp}/ensaio-fabrica/a2/minhas-cenas.json</code>, troque o scene_files da config e rode o prepare com max_chars 4400.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a2/explicavideos && python3 explica.py --config ../ensaio.json prepare; echo \"saída: $?\"</code> → uma linha <code>{\"blocks\": …, \"scenes\": N, …}</code> com o N das suas cenas e <code>saída: 0</code>."
         }
       ]
     },

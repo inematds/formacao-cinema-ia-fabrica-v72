@@ -87,8 +87,8 @@
       {
         "t": "Antes de começar",
         "itens": [
-          "Linux ou macOS com git, Python 3, Node 22 ou mais novo e FFmpeg. No Windows, use o WSL.",
-          "Uns 2 GB livres: o navegador do render e a voz local baixam no primeiro uso. A aula 3 usa o agent-browser.",
+          "Linux ou macOS com git, Python 3 (com PyYAML e Pillow: pip install pyyaml pillow), Node 22 ou mais novo e FFmpeg. No Windows, use o WSL.",
+          "Espaço livre (estimativa: uns 2 GB): o navegador do render e a voz local baixam no primeiro uso. A aula 3 usa o agent-browser.",
           "Recomendado: o curso 3 (Motion por código), que ensina o HyperFrames que estes motores usam."
         ]
       }

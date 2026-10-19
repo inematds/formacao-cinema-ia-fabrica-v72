@@ -1,0 +1,289 @@
+{
+  "slug": "documentario",
+  "num": 4,
+  "menu": "Documental",
+  "titulo": "Documental narrado y tu versión de un video de referencia",
+  "titulo_curto": "Documental y versión propia",
+  "minutos": 16,
+  "lead": "Dos motores parten de lugares distintos. docflow parte de un tema y entrega un documental corto narrado. refazvideo parte de un video de referencia y entrega tu versión en portugués, con tesis y guion tuyos. En los dos, el archivo que escribe el agente se verifica antes de cualquier generación.",
+  "objetivo": "leer el tema de un documental de docflow y validar el guion visual de un refazvideo antes de cualquier generación.",
+  "competencias": [
+    "escrever-tema-de-documentario",
+    "validar-roteiro-visual",
+    "separar-local-de-pago"
+  ],
+  "aprende": [
+    {
+      "icone": "arquivo",
+      "t": "El tema.yaml de docflow: las respuestas que se convierten en guion, imágenes, narración y montaje"
+    },
+    {
+      "icone": "portao",
+      "t": "Qué comandos de docflow llaman a un modelo o generador y cuáles son locales"
+    },
+    {
+      "icone": "lupa",
+      "t": "El validador de refazvideo: cada pie de pantalla tiene que estar en la narración"
+    },
+    {
+      "icone": "escudo",
+      "t": "Las reglas que refazvideo no negocia: rostro del autor original cubierto, aprobación antes del avatar"
+    }
+  ],
+  "hero_alt": "Mesa oscura de investigación con un mapa antiguo sin leyenda, lupa, fotos impresas de desierto y ruinas, y un monitor con una escena de desierto y la forma de onda de la narración.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "Dos caminos hasta el video narrado",
+      "sub": "Haz clic en cada etapa. Las marcadas como pagadas quedan fuera de la práctica.",
+      "nos": [
+        {
+          "icone": "arquivo",
+          "titulo": "Tema",
+          "sub": "docflow",
+          "detalhe": "Un YAML con tema, estilo visual, duración total y por escena, formato, idioma, motor de generación y voz. Es todo lo que escribes."
+        },
+        {
+          "icone": "robo",
+          "titulo": "Guion",
+          "sub": "modelo",
+          "detalhe": "docflow roteiro le pasa el tema a Codex de la suscripción, que devuelve el guion y los prompts de cada escena. Llama a un modelo: queda fuera de la práctica."
+        },
+        {
+          "icone": "video",
+          "titulo": "Generar",
+          "sub": "imagen y clip",
+          "detalhe": "docflow gerar hace imágenes y clips con el motor elegido en el tema (flow, agnes, reais o historia; el \"local\" del comentario de egito.yaml no está implementado en el commit f1ed75e). Es generación de video: fuera de la práctica. Sin generador, estatica cambia el clip por una imagen con zoom lento."
+        },
+        {
+          "icone": "megafone",
+          "titulo": "Narrar y montar",
+          "sub": "local",
+          "detalhe": "Una narración por escena con la voz de inemavox (TTS local) y el montaje en ffmpeg: tiempo, transición, fundidos, ambiente y música."
+        },
+        {
+          "icone": "check",
+          "titulo": "Versión propia",
+          "sub": "refazvideo",
+          "forte": true,
+          "detalhe": "Del video de referencia: descargar, transcribir, extraer fotogramas, escribir tu propio guion y guion visual, validar los pies y solo entonces producir en explicavideos."
+        }
+      ],
+      "legenda": "docflow 0.8.0 (commit f1ed75e) y refazvideo 1.4.1 (commit e1f369e), leídos el 19/10/2026."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "docflow sin generar nada",
+      "sub": "Versión, estilos y el tema del video modelo. Solo comandos locales.",
+      "blocos": [
+        {
+          "rot": "Terminal · leer docflow",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a4; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/docflow.git && cd docflow && git checkout -q f1ed75e\n./docflow --version\n./docflow estilos | head -4\ngrep -E \"^(slug|estilo|duracao_total|duracao_cena|formato|motor|voz):\" temas/egito.yaml"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>0.8.0\ndocflow 0.8.0 · estilos (use `estilo: &lt;nome&gt;` no tema)\n\n  documentario\n    Documentário narrado com cenas geradas por IA (imagem -&gt; vídeo), ritmo calmo.\nslug: egito-antigo\nestilo: \"realistic cinematic documentary, natural golden light, 35mm film look\"\nduracao_total: 60\nduracao_cena: 10\nformato: \"16:9\"\nmotor: agnes          # flow | agnes | local\nvoz: nei              # voz do inemavox (chatterbox): nei, nei2, bella...</pre><p>El motor y la voz quedan en el tema, no en el código. Atención: <code>voz: nei</code> es la voz clonada del propio Nei, usada con su consentimiento. En tu copia, cámbiala por una voz de banco o por la tuya, con formulario de consentimiento (clase 7). La duración total dividida por la duración de la escena da el número de escenas (60 ÷ 10 = 6).</p>"
+          },
+          {
+            "rot": "Cuidado con publicar",
+            "html": "<p>En el commit f1ed75e, <code>docflow publicar</code> llama a yt-pubx en ensayo (dry-run), pero, si todavía no hay <code>thumb.jpg</code> en la carpeta del video, yt-pubx le pide a Codex la frase y la escena de la portada. El ensayo de publicación sin modelo está en la clase 8.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "video",
+      "titulo": "El documental modelo",
+      "sub": "Antiguo Egipto en un minuto: el video que generó este tema (55 s, 16:9, narración local).",
+      "chave": "egito"
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El validador de refazvideo",
+      "sub": "El ejemplo real del repositorio: guion en PT y el guion visual de dos bloques. Cada pantalla entra en un pie (at) que tiene que estar en la narración.",
+      "blocos": [
+        {
+          "rot": "Terminal · validar el guion visual",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a4; cd \"$E\"\ngit clone -q https://github.com/inematds/refazvideo.git && cd refazvideo && git checkout -q e1f369e\ncat VERSION\nX=exemplos/decisions-jev\npython3 ferramentas/validar_visual.py $X/roteiro-pt.json $X/pt-b01.json $X/pt-b02.json; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>1.4.1\naviso exemplos/decisions-jev/pt-b02.json cena 7: 'no visible damage' aparece 2x, casa com a 1ª\nOK 1 aviso(s)\nsaída: 0</pre><p>Un aviso no reprueba: el pie aparece dos veces en la narración y la pantalla entra en la primera. Si no es eso lo que quieres, cambia el pie por un fragmento único.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Un pie que no está en la narración",
+      "sub": "La misma validación con un pie cambiado (\"Faz poucas semanas\" en lugar de \"Há poucas semanas\").",
+      "blocos": [
+        {
+          "rot": "Terminal · pie equivocado",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a4; cd \"$E/refazvideo\"; X=exemplos/decisions-jev\nsed '0,/\"at\": \"Há poucas semanas\"/s//\"at\": \"Faz poucas semanas\"/' $X/pt-b01.json > \"$E/pt-b01-errado.json\"\npython3 ferramentas/validar_visual.py $X/roteiro-pt.json \"$E/pt-b01-errado.json\" $X/pt-b02.json; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>ERRO /tmp/ensaio-fabrica/a4/pt-b01-errado.json cena 1: cue não está na fala: 'Faz poucas semanas'\naviso exemplos/decisions-jev/pt-b02.json cena 7: 'no visible damage' aparece 2x, casa com a 1ª\n1 erro(s) 1 aviso(s)\nsaída: 1</pre><p>Sin el validador, esa pantalla nunca entraría en el video y solo lo descubrirías después de generar el avatar.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Las reglas de refazvideo",
+      "sub": "Leídas en el AGENTS.md del commit e1f369e. Valen antes de cualquier producción.",
+      "passos": [
+        {
+          "titulo": "Versión, no copia",
+          "texto": [
+            "El video de referencia da el tema; la tesis, el guion y la narración son tuyos, en portugués natural. Los términos técnicos quedan como están."
+          ]
+        },
+        {
+          "titulo": "Rostro cubierto",
+          "texto": [
+            "El rostro del presentador original nunca aparece: cada captura se revisa y se cubre con <code>preparar_print.py --cobrir</code>. Derecho de imagen y licencia de material ajeno: <a href=\"https://inematds.github.io/formacao-cinema-ia-producao-v72/es/aulas/etica/\">curso 2, clase 7</a>."
+          ]
+        },
+        {
+          "titulo": "Aprobación antes del avatar",
+          "texto": [
+            "El avatar solo se genera con el \"puede hacerse\" del dueño registrado en <code>APROVADO_HEYGEN</code>, con fecha, bloques y minutos. Antes de eso: guion, storyboard y validador."
+          ]
+        },
+        {
+          "titulo": "Crédito de la fuente",
+          "texto": [
+            "El motor, tal como está, no acredita la referencia por sí solo: solo si el pedido lo dice. Recomendación del curso: da crédito por defecto, y usa una captura de video de otra persona solo con licencia o uso permitido."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Un tema tuyo y una entrada tuya, verificados.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · El docflow leído",
+          "min": "5 min",
+          "texto": "Ejecuta el bloque \"ler o docflow\".",
+          "pronto": "La salida muestra <code>0.8.0</code>, <code>documentario</code> y <code>slug: egito-antigo</code> con <code>duracao_total: 60</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Validador",
+          "min": "5 min",
+          "texto": "Ejecuta \"validar o roteiro visual\" y \"deixa errada\".",
+          "pronto": "<code>OK 1 aviso(s)</code> con <code>saída: 0</code>, y luego <code>cue não está na fala: 'Faz poucas semanas'</code>, <code>1 erro(s) 1 aviso(s)</code> y <code>saída: 1</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Tu tema",
+          "min": "15 min",
+          "texto": "Copia temas/egito.yaml a <code>temas/meu-tema.yaml</code> en el clon del ensayo y cambia slug, tema, estilo, voz y las duraciones para un documental tuyo de 6 a 8 escenas. No corras roteiro ni gerar.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas')\"</code> → tu slug y un número de 6 a 8 seguido de <code>cenas</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "sub": "La explicación aparece después de tu respuesta.",
+      "perguntas": [
+        {
+          "p": "¿Cuáles comandos del docflow llaman a un modelo o a un generador de video?",
+          "opcoes": [
+            "--version y estilos.",
+            "roteiro y gerar.",
+            "narrar y montar.",
+            "Ninguno: todo corre local."
+          ],
+          "certa": 1,
+          "explica": "roteiro llama al Codex de la suscripción y gerar llama al motor de imagen y video del tema. narrar usa TTS local y montar usa ffmpeg.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "El validador del refazvideo reprobó con \"cue não está na fala\". ¿Qué quiere decir eso?",
+          "opcoes": [
+            "Que el habla pasó del límite de caracteres del bloque.",
+            "Que la captura muestra el rostro del presentador original.",
+            "Que la entrada de la pantalla no está en el habla.",
+            "Que falta el archivo APROVADO_HEYGEN en la carpeta de salida."
+          ],
+          "certa": 2,
+          "explica": "Cada pantalla entra en el momento en que el habla dice la entrada (at). Si la entrada no existe en el habla, la pantalla nunca entra.",
+          "ref": "codigo"
+        },
+        {
+          "p": "Quieres el documental sin ningún generador de video. ¿Qué camino del docflow?",
+          "opcoes": [
+            "estatica, con la imagen y zoom lento.",
+            "publicar con --enviar, que salta el paso de gerar.",
+            "Cambiar el formato del tema de 16:9 a 9:16.",
+            "Ejecutar el comando tudo dos veces seguidas."
+          ],
+          "certa": 0,
+          "explica": "estatica --cenas N usa la imagen con zoom lento en lugar del clip de IA. La película entera con fotos y cámara 2.5D es del curso 2, lección 5.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "Tema",
+          "texto": "en docflow escribes el YAML; motor y voz (la tuya, con formulario de consentimiento) son una línea cada uno."
+        },
+        {
+          "t": "Entrada",
+          "texto": "en el refazvideo, cada pantalla entra en una frase que tiene que estar en el habla."
+        },
+        {
+          "t": "Compuerta",
+          "texto": "roteiro, gerar y avatar quedan después de la verificación y de la aprobación."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "docflow: guía de uso",
+          "href": "https://inematds.github.io/docflow/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "refazvideo: guía de uso",
+          "href": "https://inematds.github.io/refazvideo/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "Un video hecho con el refazvideo: AI harness, en el reproductor",
+          "href": "https://inematds.github.io/ai-harness/videos/",
+          "icone": "play"
+        }
+      ]
+    }
+  ]
+}

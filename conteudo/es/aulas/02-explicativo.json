@@ -1,0 +1,339 @@
+{
+  "slug": "explicativo",
+  "num": 2,
+  "menu": "Explicativo",
+  "titulo": "Explicativo con avatar y voz: explicavideos por dentro",
+  "titulo_curto": "explicavideos por dentro",
+  "minutos": 18,
+  "lead": "explicavideos transforma un guion en un video explicativo con avatar, voz, escenas animadas y subtítulos. La parte cara es una sola: el estudio de avatar. En esta clase ejecutas las pruebas del motor y armas escenas, bloques y moldes de un guion tuyo, deteniéndote antes del estudio.",
+  "objetivo": "ejecutar las pruebas de explicavideos y armar escenas y bloques de un guion tuyo sin generar nada en el estudio de avatar.",
+  "competencias": [
+    "leer-pipeline-explicativo",
+    "armar-escenas-y-bloques",
+    "parar-antes-del-credito"
+  ],
+  "aprende": [
+    {
+      "icone": "camadas",
+      "t": "Las etapas del motor, del guion al video armado"
+    },
+    {
+      "icone": "arquivo",
+      "t": "El formato de escena: título, capítulo, habla, rótulos y frase para llevar"
+    },
+    {
+      "icone": "fila",
+      "t": "Por qué las escenas se convierten en bloques y qué hace el límite por bloque"
+    },
+    {
+      "icone": "portao",
+      "t": "Dónde está la compuerta del estudio y qué dice el --help que el código no hace"
+    }
+  ],
+  "hero_alt": "Pequeño estudio oscuro con un banco vacío, un micrófono en el pedestal y un monitor de edición con la pantalla dividida en diapositiva y presentador.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "El camino de un explicativo",
+      "sub": "Haz clic en cada etapa. Solo la del medio gasta crédito.",
+      "nos": [
+        {
+          "icone": "arquivo",
+          "titulo": "Escenas",
+          "sub": "JSON",
+          "detalhe": "Una lista de escenas con title, chapter, speech (la locución), labels (las etiquetas de pantalla), takeaway y source. El agente escribe; tú revisas."
+        },
+        {
+          "icone": "fila",
+          "titulo": "Bloques",
+          "sub": "prepare",
+          "detalhe": "El prepare junta escenas completas en bloques hasta el límite max_chars (4.400 en el --help y en todos los ejemplos) y guarda blocos/manifest.json. Ninguna locución se corta a la mitad."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Estudio",
+          "sub": "crédito",
+          "forte": true,
+          "detalhe": "Cada bloque se convierte en un video de avatar en el estudio de HeyGen, con la suscripción de quien es dueño del avatar. Es el único paso que gasta crédito, y solo corre con el comando start. En el commit 604fc74 quien genera es un script Playwright en el estudio web, con el perfil y la pantalla virtual del entorno del dueño: en otra máquina, el start no corre sin adaptación."
+        },
+        {
+          "icone": "megafone",
+          "titulo": "Transcripción",
+          "sub": "tiempo de la habla",
+          "detalhe": "El audio del avatar se transcribe con tiempo por palabra (Whisper local o un servicio externo, según la config). Eso es lo que sincroniza escena y habla."
+        },
+        {
+          "icone": "video",
+          "titulo": "Render",
+          "sub": "HyperFrames",
+          "detalhe": "En el motor v1 (explica.py), cada bloque se convierte en una composición HyperFrames con el avatar en una esquina, las escenas y el subtítulo, y los bloques se montan en un MP4. El v2 (engine/v2) rehace lo visual encima, reaprovechando el avatar y la transcripción del v1."
+        }
+      ],
+      "volta": "el manifiesto guarda dónde quedó",
+      "legenda": "Etapas del motor v1, leídas en el README y en el código de explicavideos 2.13.10 (commit 604fc74). El prepare es la primera etapa de los dos motores, v1 y v2. HyperFrames por dentro es tema del curso 3."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El motor en un commit fijo",
+      "sub": "Clona, muestra la versión, lee el --help y ejecuta las pruebas. Las pruebas simulan la red y cambian el render por un comando que falla si se lo llama: nada sale de tu máquina.",
+      "blocos": [
+        {
+          "rot": "Terminal · pruebas de explicavideos",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a2; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/explicavideos.git && cd explicavideos\ngit checkout -q 604fc74 && cat VERSION\npython3 explica.py --help | grep -E \"^  (prepare|preview)\"\npython3 -m unittest discover -s tests > testes.log 2>&1; echo \"saída: $?\"\ngrep -E \"^(Ran|OK)\" testes.log | sed 's/ in .*s$//'"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>2.13.10\n  prepare   monta cenas, blocos (&lt;= 4.400 caracteres) e templates. Não gera nada no HeyGen.\n  preview   renderiza o bloco 1 localmente, sem avatar, para conferir o layout.\nsaída: 0\nRan 50 tests\nOK</pre><p>El bloque quita el tiempo de la línea <code>Ran 50 tests</code> (cambia en cada ejecución). Fíjate en el texto de <code>preview</code>: dice que renderiza, pero mira la siguiente pestaña.</p>"
+          },
+          {
+            "rot": "El --help y el código",
+            "html": "<p>En el commit 604fc74, <code>preview</code> llama a <code>build_final_block.py pt 1 --preview</code>, que solo graba el HTML del bloque 1 en <code>layout-preview/</code>, con tiempos ficticios y el aviso \"PRÉVIA VISUAL · SEM NARRAÇÃO\" en lugar del avatar. No sale ningún MP4. Cuando el texto de ayuda y el código divergen, vale el código.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Un guion tuyo se convierte en escenas y bloques",
+      "sub": "Cuatro escenas de ejemplo y una config que apunta a ellas. El límite bajo (300 caracteres) es a propósito, para ver el empaquetado.",
+      "blocos": [
+        {
+          "rot": "Archivo · kit/exemplos/a2-explica/cenas-pt.json",
+          "icone": "arquivo",
+          "conteudo": "[\n  {\"title\": \"Por que conferir antes de gerar\", \"chapter\": \"ABERTURA\", \"kind\": \"steps\", \"speech\": \"Gerar avatar custa crédito e tempo. Por isso o motor monta tudo antes: cenas, blocos e moldes. Só depois de conferir é que alguma coisa vai para o estúdio.\", \"labels\": [\"Cenas\", \"Blocos\", \"Moldes\"], \"takeaway\": \"Conferir é de graça. Gerar não é.\", \"source\": \"README do explicavideos\"},\n  {\"title\": \"O roteiro vira cenas\", \"chapter\": \"ETAPA 1\", \"kind\": \"steps\", \"speech\": \"Cada cena tem título, capítulo, fala e até três rótulos. A fala é o que o avatar diz; os rótulos são o que aparece na tela.\", \"labels\": [\"Título\", \"Fala\", \"Rótulos\"], \"takeaway\": \"Fala para ouvir, rótulo para ver.\", \"source\": \"engine/prepare.py\"},\n  {\"title\": \"As cenas viram blocos\", \"chapter\": \"ETAPA 2\", \"kind\": \"steps\", \"speech\": \"O estúdio aceita um texto de tamanho limitado por vídeo. O motor junta cenas inteiras em blocos até o limite, sem cortar nenhuma fala no meio.\", \"labels\": [\"Limite por bloco\", \"Cena inteira\", \"Sem corte\"], \"takeaway\": \"Bloco é um vídeo de avatar.\", \"source\": \"engine/prepare.py\"},\n  {\"title\": \"O que vem depois\", \"chapter\": \"ETAPA 3\", \"kind\": \"steps\", \"speech\": \"Com os blocos prontos, a pessoa dona do avatar aprova e só então o estúdio gera. Depois vêm transcrição, cenas animadas, render e montagem.\", \"labels\": [\"Aprovação\", \"Estúdio\", \"Render\"], \"takeaway\": \"Aprovação humana antes do crédito.\", \"source\": \"README do explicavideos\"}\n]"
+        },
+        {
+          "rot": "Terminal · prepare y status",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\nE=${TMPDIR:-/tmp}/ensaio-fabrica/a2; cd \"$E/explicavideos\"\ncat > \"$E/ensaio.json\" <<FIM\n{\"id\": \"ensaio\", \"title\": \"Ensaio\", \"source_repo\": \"$E\", \"output\": \"$E/saida\",\n \"languages\": [\"pt\"], \"scene_files\": {\"pt\": \"$K/exemplos/a2-explica/cenas-pt.json\"},\n \"max_chars\": 300}\nFIM\npython3 explica.py --config \"$E/ensaio.json\" prepare; echo \"saída: $?\"\nls \"$E/saida/blocos\" \"$E/saida/templates/pt\"\npython3 explica.py --config \"$E/ensaio.json\" status | head -3"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>{\"blocks\": 2, \"scenes\": 4, \"topics\": 0, \"chars\": 561}\nsaída: 0\n/tmp/ensaio-fabrica/a2/saida/blocos:\nmanifest.json\npt-b01.txt\npt-b02.txt\n\n/tmp/ensaio-fabrica/a2/saida/templates/pt:\nscene-01.html\nscene-02.html\nscene-03.html\nscene-04.html\n{\n  \"submitted\": {\n    \"prepared\": 2</pre><p>Dos escenas por bloque (155 + 123 caracteres caben en 300; la tercera no). El <code>status</code> muestra los dos bloques como <code>prepared</code>: no se envió nada al estudio. Los moldes <code>scene-NN.html</code> ya tienen <code>data-duration</code> calculado a partir de la narración.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Cuando una escena no cabe",
+      "sub": "El motor se niega a cortar una narración. Con el límite en 140, la primera escena (155 caracteres) ya lo supera.",
+      "blocos": [
+        {
+          "rot": "Terminal · límite excedido",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a2; cd \"$E/explicavideos\"\nsed 's/\"max_chars\": 300/\"max_chars\": 140/' \"$E/ensaio.json\" > \"$E/curto.json\"\nsed -i 's#\"output\": \"[^\"]*\"#\"output\": \"'\"$E\"'/saida-curta\"#' \"$E/curto.json\"\npython3 explica.py --config \"$E/curto.json\" prepare 2>&1 | grep -E \"^ValueError\"; echo \"saída: ${PIPESTATUS[0]}\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>ValueError: Scene 1 exceeds limit; split its narration before submitting\nsaída: 1</pre><p>La solución es dividir la narración de la escena en dos, no aumentar el límite: el límite real viene del estudio.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "simfila",
+      "titulo": "El start: cinco servicios que retoman donde se quedaron",
+      "sub": "En producción real, el start levanta cinco servicios. Ejecútalo, interrúmpelo y vuelve a ejecutarlo.",
+      "tarefas": [
+        "enviar bloques al estudio",
+        "verificar y descargar",
+        "renderizar los bloques",
+        "armar el MP4",
+        "publicar y avisar"
+      ],
+      "falha": 2,
+      "rot": {
+        "entrada": "fila/",
+        "rodando": "rodando/",
+        "feito": "pronto/",
+        "falhou": "falhou/",
+        "rodar": "Ejecutar la cola",
+        "parar": "Interrumpir (Ctrl+C)",
+        "zerar": "Reiniciar"
+      },
+      "msg": {
+        "inicio": "5 etapas en fila/. Haz clic en \"Ejecutar la cola\".",
+        "rodando": "Cada servicio lee y escribe el manifiesto: así sabe qué ya se hizo.",
+        "parou": "Interrumpido. La etapa del medio quedó en rodando/. Ejecuta de nuevo para ver la reanudación.",
+        "retoma": "Reanudación: lo que ya figura en el manifiesto como enviado no se reenvía. Reenviar = generar de nuevo = gastar crédito.",
+        "fim": "Cola vacía: video armado y publicado.",
+        "fimfalha": "Cola vacía. El render fue a falhou/: rehaces solo el render, sin tocar el estudio."
+      },
+      "legenda": "Simulación en el navegador: nada se ejecuta de verdad. Los cinco nombres son los servicios del start en explicavideos 2.13.10 (submit, monitor, render, assemble, publish)."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Lo que va antes del estudio",
+      "sub": "Tres cosas para verificar antes de cualquier start.",
+      "passos": [
+        {
+          "titulo": "Aprobación",
+          "texto": [
+            "El --help del motor exige un archivo APROVADO_HEYGEN en el output, con la autorización del dueño del avatar y el número de bloques y minutos. Es una regla escrita, no un bloqueo en el código: tu compuerta (clase 7) es la que cierra de verdad."
+          ]
+        },
+        {
+          "titulo": "Avatar propio",
+          "texto": [
+            "El motor fue hecho para el avatar y la voz de Nei, con su consentimiento. En tu uso, el avatar es tuyo, con formulario de consentimiento firmado. El avatar de otra persona sin formulario, no."
+          ]
+        },
+        {
+          "titulo": "Perfiles",
+          "texto": [
+            "Los perfiles son del v2: sin profile_visual, sale el perfil aula; con \"profile_visual\": \"viral\", el perfil viral (cortes más rápidos), verificado por <code>engine/v2/qa_viral.py</code>, que imprime APROVADO, APROVADO COM AVISO o REPROVADO."
+          ]
+        },
+        {
+          "titulo": "El v2 por encima",
+          "texto": [
+            "El v2 no genera el avatar de nuevo: parte de una producción v1 lista y rehace lo visual de cada bloque con un guion visual por pies hablados, el mismo concepto que el validador de refazvideo verifica en la clase 4.",
+            "Comandos del README (solo descritos aquí, porque necesitan la locución transcrita del avatar): <code>engine/v2/setup_output.py</code> → <code>engine/v2/build_block.py 1 --strict</code> → <code>engine/v2/run_lane.sh 1 2 3</code>."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "video",
+      "titulo": "Lo que sale del motor",
+      "sub": "Un explicativo de 10 minutos hecho con explicavideos v2, con avatar y voz del propio Nei (con su consentimiento), en tres idiomas.",
+      "chave": "iacultivada"
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Del motor probado a las escenas de tu próximo video.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Motor probado",
+          "min": "5 min",
+          "texto": "Ejecuta el bloque \"pruebas de explicavideos\".",
+          "pronto": "La salida muestra <code>2.13.10</code>, <code>saída: 0</code>, <code>Ran 50 tests</code> y <code>OK</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Escenas y bloques",
+          "min": "5 min",
+          "texto": "Ejecuta el bloque \"prepare e status\" con las cuatro escenas del kit.",
+          "pronto": "<code>{\"blocks\": 2, \"scenes\": 4, \"topics\": 0, \"chars\": 561}</code>, <code>saída: 0</code> y el status con <code>\"prepared\": 2</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Tu guion",
+          "min": "15 min",
+          "texto": "Pídele a tu agente las escenas de un explicativo tuyo (5 a 8 escenas, cada locución con hasta 600 caracteres) en el mismo formato de cenas-pt.json. Guárdalo en <code>${TMPDIR:-/tmp}/ensaio-fabrica/a2/minhas-cenas.json</code>, cambia el scene_files de la config y corre el prepare con max_chars 4400.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a2/explicavideos && python3 explica.py --config ../ensaio.json prepare; echo \"saída: $?\"</code> → una línea <code>{\"blocks\": …, \"scenes\": N, …}</code> con el N de tus escenas y <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "sub": "La explicación aparece después de tu respuesta.",
+      "perguntas": [
+        {
+          "p": "¿Qué comando de explicavideos gasta crédito?",
+          "opcoes": [
+            "prepare",
+            "status",
+            "start",
+            "preview"
+          ],
+          "certa": 2,
+          "explica": "El start levanta los servicios, y el primero (submit) genera video en el estudio de avatar. prepare, status y preview son locales.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Una escena tiene 5.000 caracteres de parlamento y el límite es 4.400. ¿Qué haces?",
+          "opcoes": [
+            "Dividir el parlamento en dos escenas.",
+            "Subir max_chars a 6.000.",
+            "Borrar las etiquetas de la escena.",
+            "Ejecutar el start de todos modos."
+          ],
+          "certa": 0,
+          "explica": "El límite viene del estudio, por bloque. El motor se niega a cortar un parlamento por la mitad (ValueError: Scene … exceeds limit); la salida es dividir la escena.",
+          "ref": "codigo"
+        },
+        {
+          "p": "El --help dice que preview renderiza; el código solo guarda un HTML. ¿En quién confías?",
+          "opcoes": [
+            "En el --help, porque es la documentación oficial.",
+            "En el código, y anotas la divergencia.",
+            "En ninguno de los dos: solo en el README.",
+            "En lo que diga el agente."
+          ],
+          "certa": 1,
+          "explica": "Cuando la prosa y el código divergen, vale el código. Ejecuta y mira qué sale en layout-preview/ antes de prometer un MP4.",
+          "ref": "codigo"
+        },
+        {
+          "p": "¿Por qué importa el manifiesto cuando el start se interrumpe?",
+          "opcoes": [
+            "Porque borra los bloques ya descargados para liberar disco.",
+            "Porque guarda la contraseña del estudio de avatar.",
+            "Porque acelera el render de los bloques siguientes.",
+            "Porque dice qué ya fue enviado al estudio."
+          ],
+          "certa": 3,
+          "explica": "Cada servicio lee el manifiesto y solo hace lo que falta. Un bloque ya enviado no vuelve al estudio: reenviar es generar de nuevo.",
+          "ref": "simfila"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "Escenas",
+          "texto": "parlamento para escuchar, etiqueta para ver; el agente escribe, tú revisas."
+        },
+        {
+          "t": "Bloques",
+          "texto": "el prepare empaqueta escenas completas hasta el límite del estudio, sin gastar nada."
+        },
+        {
+          "t": "Estudio",
+          "texto": "el único paso de pago queda detrás del start, de la aprobación y de tu formulario de consentimiento."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "Explicavideos: guía de uso",
+          "href": "https://inematds.github.io/explicavideos/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "Explicavideos en GitHub",
+          "href": "https://github.com/inematds/explicavideos",
+          "icone": "git"
+        },
+        {
+          "t": "El video IA Cultivada en el reproductor con capítulos",
+          "href": "https://inematds.github.io/iacultivada/videos/",
+          "icone": "play"
+        }
+      ]
+    }
+  ]
+}

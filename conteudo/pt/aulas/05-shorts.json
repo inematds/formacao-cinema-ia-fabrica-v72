@@ -69,7 +69,7 @@
           "detalhe": "Mede com ffmpeg: duração do perfil, 1080×1920, 30 fps, h264 e aac, loudness −14 ±1 LUFS, sem tela preta no começo, trechos parados. Falha fecha: medida que não deu, reprova."
         }
       ],
-      "legenda": "makeshorts no commit 52eb799, contrato de QA 1.2.1. O gancho como texto e cena vem do curso antigo 33viralhooks (só a anatomia)."
+      "legenda": "makeshorts no commit 52eb799, contrato de QA 1.2.1."
     },
     {
       "tipo": "passos",
@@ -231,8 +231,8 @@
           "id": "e3",
           "titulo": "E3 · O seu gancho",
           "min": "15 min",
-          "texto": "Escreva <code>/tmp/ensaio-fabrica/a5/meu.md</code> com a seção <code>### FALA</code> de um short seu (60 a 125 palavras) e as três camadas do gancho anotadas fora da seção.",
-          "pronto": "<code>cd /tmp/ensaio-fabrica/a5 && python3 makeshorts/.claude/skills/makeshorts/scripts/qa_roteiro.py meu.md --keyword [sua palavra]; echo \"saída: $?\"</code> → <code>RESULTADO: APROVADO</code> e <code>saída: 0</code>."
+          "texto": "Escreva <code>${TMPDIR:-/tmp}/ensaio-fabrica/a5/meu.md</code> com a seção <code>### FALA</code> de um short seu (60 a 125 palavras) e as três camadas do gancho anotadas fora da seção.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a5 && python3 makeshorts/.claude/skills/makeshorts/scripts/qa_roteiro.py meu.md --keyword [sua palavra]; echo \"saída: $?\"</code> → <code>RESULTADO: APROVADO</code> e <code>saída: 0</code>."
         }
       ]
     },

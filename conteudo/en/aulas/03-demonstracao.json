@@ -1,0 +1,268 @@
+{
+  "slug": "demonstracao",
+  "num": 3,
+  "menu": "Demo",
+  "titulo": "App demo, click by click",
+  "titulo_curto": "App demo",
+  "minutos": 20,
+  "lead": "To show an app, the real screen is more convincing than any animation. video-demonstrativo drives a browser through your app, takes a photo at each step with the position of the clicked element, narrates with a local voice, and assembles the video with cursor and zoom. In this lesson you do all of it, with a sample app, at no credit cost.",
+  "objetivo": "capture an app step by step with the agent and render the narrated demo that passes the checker.",
+  "competencias": [
+    "escrever-actions-json",
+    "capturar-app-real",
+    "renderizar-demonstracao"
+  ],
+  "aprende": [
+    {
+      "icone": "arquivo",
+      "t": "The actions.json: URL, screen size, and one step per click"
+    },
+    {
+      "icone": "lupa",
+      "t": "Capture with agent-browser: a screenshot and the target position for each step"
+    },
+    {
+      "icone": "megafone",
+      "t": "Local narration per step, with the Kokoro voice, no external service"
+    },
+    {
+      "icone": "video",
+      "t": "The generated composition and the render with the HyperFrames version pinned"
+    }
+  ],
+  "hero_alt": "Laptop on a dark desk showing an app with a circle highlighting the cursor, and a second monitor with the same screen enlarged.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "From the live app to the MP4",
+      "sub": "Click each step.",
+      "nos": [
+        {
+          "icone": "arquivo",
+          "titulo": "actions.json",
+          "sub": "the script",
+          "detalhe": "URL, fixed viewport and the list of steps: what to do (fill, click, clickText, setValue, wait), which element to aim the cursor at, the on-screen caption and the narration line."
+        },
+        {
+          "icone": "lupa",
+          "titulo": "Capture",
+          "sub": "capture.mjs",
+          "detalhe": "Drives agent-browser through the real app, takes a screenshot for each state (assets/shots/NN-id.png) and measures the target's box with getBoundingClientRect. Writes steps.json."
+        },
+        {
+          "icone": "megafone",
+          "titulo": "Narration",
+          "sub": "local voice",
+          "detalhe": "One line per step plus the closing, each in its own WAV, using HyperFrames' own Kokoro pf_dora voice. Nothing leaves your machine."
+        },
+        {
+          "icone": "camadas",
+          "titulo": "Composition",
+          "sub": "build-demo",
+          "detalhe": "The composition-template.mjs measures each WAV and writes the index.html: browser window, a cursor that moves to the target, click, zoom and caption timed to the narration."
+        },
+        {
+          "icone": "video",
+          "titulo": "Render",
+          "sub": "MP4",
+          "forte": true,
+          "detalhe": "HyperFrames check and render, with the version pinned in the commands. Then the kit's checker verifies duration, size and audio."
+        }
+      ],
+      "legenda": "Steps of the video-demonstrativo skill at commit a87b382 (Oct 5, 2026). Capture before animating: the video shows the real screen."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The app and the click script",
+      "sub": "A one-page app in the kit (how many words fit in a narration) and the actions.json with five steps.",
+      "blocos": [
+        {
+          "rot": "File · kit/exemplos/a3-demo/actions.json",
+          "icone": "arquivo",
+          "conteudo": "{\n  \"url\": \"http://127.0.0.1:18791/\",\n  \"viewport\": [1280, 800],\n  \"window\": { \"top\": 96, \"titleH\": 52, \"urlLabel\": \"127.0.0.1:18791\" },\n  \"eyebrow\": \"DEMONSTRAÇÃO · MINUTOS DE VÍDEO\",\n  \"ctaNarration\": \"Pronto: agora você sabe quantas palavras cabem no seu vídeo.\",\n  \"ctaCaption\": \"Roteiro do tamanho certo\",\n  \"steps\": [\n    { \"id\": \"home\", \"intro\": true, \"caption\": \"Minutos de vídeo · do zero\", \"narration\": \"Este app diz quantas palavras cabem numa narração. Vamos usar em três cliques.\" },\n    { \"id\": \"minutos\", \"do\": { \"type\": \"setValue\", \"selector\": \"#min\", \"value\": \"3\" }, \"target\": \"#min\", \"caption\": \"1 · Duração: 3 minutos\", \"narration\": \"Primeiro, a duração do vídeo: três minutos.\" },\n    { \"id\": \"ritmo\", \"do\": { \"type\": \"setValue\", \"selector\": \"#ppm\", \"value\": \"140\" }, \"target\": \"#ppm\", \"caption\": \"2 · Ritmo: 140 palavras por minuto\", \"narration\": \"Depois, o ritmo da fala. Uma narração calma fica perto de cento e quarenta palavras por minuto.\" },\n    { \"id\": \"calcular\", \"do\": { \"type\": \"clickText\", \"tag\": \"button\", \"text\": \"Calcular\" }, \"target\": { \"tag\": \"button\", \"text\": \"Calcular\" }, \"click\": true, \"caption\": \"3 · Calcular\", \"narration\": \"Agora é só clicar em calcular.\" },\n    { \"id\": \"resultado\", \"target\": \"#res\", \"zoom\": true, \"caption\": \"Cabem 420 palavras\", \"narration\": \"Cabem quatrocentas e vinte palavras. Esse é o tamanho do seu roteiro.\" }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Capture the app",
+      "sub": "The block serves the app on a local port, runs the capture in its own agent-browser session and shuts everything down at the end.",
+      "blocos": [
+        {
+          "rot": "Terminal · capture the app",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\ncommand -v agent-browser > /dev/null || { echo \"FALTA agent-browser: npm i -g agent-browser@0.6.0 && agent-browser install\"; exit 1; }\nE=${TMPDIR:-/tmp}/ensaio-fabrica/a3; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/video-demonstrativo.git && git -C video-demonstrativo checkout -q a87b382\ncp video-demonstrativo/skills/video-demonstrativo/scripts/capture.mjs \"$K/exemplos/a3-demo/actions.json\" .\npython3 -m http.server 18791 --bind 127.0.0.1 --directory \"$K/exemplos/a3-demo\" > servidor.log 2>&1 & S=$!\nuntil curl -s -o /dev/null http://127.0.0.1:18791/; do sleep 0.3; done\nexport AGENT_BROWSER_SESSION=ensaio-fabrica\nnode capture.mjs actions.json > captura.log 2>&1; echo \"captura: $?\"\nagent-browser close > /dev/null 2>&1; kill $S\nls assets/shots\npython3 -c \"import json; s=json.load(open('steps.json')); print('passos no steps.json:', len(s['steps']))\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>captura: 0\n00-home.png\n01-minutos.png\n02-ritmo.png\n03-calcular.png\n04-resultado.png\npassos no steps.json: 5</pre><p>One screenshot per step and the steps.json with the measured boxes. The <code>until curl</code> waits for the port to respond before opening the browser; a fixed <code>sleep</code> fails on a loaded machine.</p>"
+          },
+          {
+            "rot": "If agent-browser is missing",
+            "html": "<p>The block stops at the first line with <code>FALTA agent-browser: npm i -g agent-browser@0.6.0 && agent-browser install</code>. The package is Apache-2.0 (npm, Oct 19, 2026); the <code>install</code> downloads the browser. The session <code>AGENT_BROWSER_SESSION=ensaio-fabrica</code> avoids touching another session you may have open.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Narrate and assemble",
+      "sub": "Creates the HyperFrames project, copies screenshots, fonts and steps.json, generates one narration line per step and writes the composition.",
+      "blocos": [
+        {
+          "rot": "Terminal · narrate and assemble",
+          "icone": "terminal",
+          "conteudo": "export HYPERFRAMES_NO_TELEMETRY=1 NO_COLOR=1\nE=${TMPDIR:-/tmp}/ensaio-fabrica/a3; S=$E/video-demonstrativo/skills/video-demonstrativo\ncd \"$E\" && rm -rf demo\nnpx -y hyperframes@0.8.176 init demo --non-interactive > init.log 2>&1; echo \"init: $?\"\ncd demo && mkdir -p assets/audio assets/txt\ncp -r ../assets/shots assets/ && cp -r \"$S/assets/fonts\" assets/ && cp ../steps.json .\ncp \"$S/scripts/composition-template.mjs\" build-demo.mjs\nnode -e 'const d=require(\"./steps.json\"); const l=d.steps.map(s=>s.narration); l.push(d.ctaNarration);\nl.forEach((t,i)=>require(\"fs\").writeFileSync(`assets/txt/s${i+1}.txt`, t.trim()+\"\\n\")); console.log(\"falas:\", l.length)'\nfor f in assets/txt/s*.txt; do\n  n=$(basename \"$f\" .txt)\n  npx -y hyperframes@0.8.176 tts \"$f\" --voice pf_dora --lang pt-br --speed 0.98 --output \"assets/audio/$n.wav\" > /dev/null 2>&1 || echo \"falhou $n\"\ndone\nls assets/audio | wc -l\nnode build-demo.mjs | head -1"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>init: 0\nfalas: 6\n6\nindex.html gerado · 1920x1080 · TOTAL=30.389s · 6 cenas (5 passos + CTA)</pre><p>Six narration lines (five steps and the closing), six WAVs. The TOTAL comes from the sum of the lines plus a gap before and after each one: change the line, and the duration changes.</p>"
+          },
+          {
+            "rot": "Why the pinned version",
+            "html": "<p>The skill at commit a87b382 calls <code>npx hyperframes</code> without a version, and the old course pinned <code>0.8.66</code>. The blocks in this course use <code>hyperframes@0.8.176</code> (npm, Oct 19, 2026) and <code>HYPERFRAMES_NO_TELEMETRY=1</code>. The why, and the rest of HyperFrames, is in <a href=\"https://inematds.github.io/formacao-cinema-ia-motion-v72/en/\">course 3</a>.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Render and check",
+      "sub": "Check, draft render and the checker, using the duration the composition itself declares.",
+      "blocos": [
+        {
+          "rot": "Terminal · render and check",
+          "icone": "terminal",
+          "conteudo": "export HYPERFRAMES_NO_TELEMETRY=1 NO_COLOR=1\nK=~/projetos/formacao-cinema-ia-fabrica-v72/kit\ncd ${TMPDIR:-/tmp}/ensaio-fabrica/a3/demo\nnpx -y hyperframes@0.8.176 check 2>&1 | grep -E \"◇|✗\" | head -3\nnpx -y hyperframes@0.8.176 render --quality draft --workers 2 --quiet --output renders/demo.mp4 > render.log 2>&1\necho \"render: $?\"\nD=$(grep -o 'id=\"root\"[^>]*data-duration=\"[0-9.]*\"' index.html | grep -o \"[0-9.]*\\\"$\" | tr -d \\\")\necho \"duração pedida: $D s\"\npython3 \"$K/conferir.py\" renders/demo.mp4 \"$D\" 1920x1080 --audio; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>  ◇ 0 errors, 0 warnings\n  ◇ 0 issues across 9 sample(s)\n  ◇ 0 errors, 0 warnings\nrender: 0\nduração pedida: 30.389 s\nOK: 30,4 s · 1920×1080 · 30 fps · com áudio\nsaída: 0</pre><p>On this machine the 30 s render took less than a minute (measured outside the capture; software render, <code>--workers 2</code>). The requested duration comes from the root's <code>data-duration</code>, so the checker works for any script of yours.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "From the sample app to your app.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Capture",
+          "min": "5 min",
+          "texto": "Run the \"capture the app\" block.",
+          "pronto": "<code>captura: 0</code>, the five photos from <code>00-home.png</code> to <code>04-resultado.png</code>, and <code>passos no steps.json: 5</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Rendered demo",
+          "min": "10 min",
+          "texto": "Run \"narrate and assemble\" and then \"render and check\".",
+          "pronto": "<code>index.html gerado · 1920x1080</code>, <code>render: 0</code> and <code>OK: … · 1920×1080 · 30 fps · com áudio</code> with <code>saída: 0</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Your app",
+          "min": "30 min",
+          "texto": "Ask your agent for an actions.json with 4 to 6 steps for an app of yours that runs on localhost. Swap the URL, run the capture with your file, and then the next two blocks.",
+          "pronto": "In the dry-run folder, <code>python3 -c \"import json; print(len(json.load(open('steps.json'))['steps']))\"</code> → the number of steps in your actions.json, and the render ends with <code>OK: … · com áudio</code> and <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "sub": "The explanation appears after you answer.",
+      "perguntas": [
+        {
+          "p": "Why is the viewport in actions.json fixed?",
+          "opcoes": [
+            "So the render finishes faster on a busy machine.",
+            "Because the measured boxes and the photos have to match.",
+            "Because agent-browser only opens 1280×800 windows.",
+            "So the narration for each step fits in the time."
+          ],
+          "certa": 1,
+          "explica": "The cursor aims at the box measured with getBoundingClientRect. If the capture screen and the photo have different sizes, the click shows up outside the button.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "What sets the final length of the demo?",
+          "opcoes": [
+            "The number of steps times 5 s, fixed.",
+            "The size in pixels of the capture photos.",
+            "The length of each spoken line, plus some slack before and after.",
+            "The value of --fps passed to the render."
+          ],
+          "certa": 2,
+          "explica": "build-demo measures each WAV and builds the scene around the speech. Longer speech, longer scene.",
+          "ref": "codigo"
+        },
+        {
+          "p": "The block waits for the app's port with an until curl loop. Why not sleep 1?",
+          "opcoes": [
+            "The server may take longer than 1 s.",
+            "Because the sleep command doesn't exist on macOS or WSL.",
+            "Because curl speeds up the local Python server startup.",
+            "Because agent-browser requires curl to run before it."
+          ],
+          "certa": 0,
+          "explica": "Waiting for the state (the port responds) and not for the clock is what makes the block repeatable on any machine.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "Capture before animating",
+          "texto": "agent-browser photographs the real app and measures where to click."
+        },
+        {
+          "t": "Speech sets the timing",
+          "texto": "each step lasts as long as its narration, made with a local voice."
+        },
+        {
+          "t": "Pinned version",
+          "texto": "HyperFrames 0.8.176 in the blocks, checker on the MP4."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "video-demonstrativo: usage guide",
+          "href": "https://inematds.github.io/video-demonstrativo/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "agent-browser on GitHub",
+          "href": "https://github.com/vercel-labs/agent-browser",
+          "icone": "git"
+        },
+        {
+          "t": "Course 3: HyperFrames from scratch",
+          "href": "https://inematds.github.io/formacao-cinema-ia-motion-v72/en/",
+          "icone": "camadas"
+        }
+      ]
+    }
+  ]
+}

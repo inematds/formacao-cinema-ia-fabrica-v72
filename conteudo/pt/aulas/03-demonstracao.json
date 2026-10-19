@@ -149,7 +149,7 @@
         "abas": [
           {
             "rot": "Saída capturada (19/10/2026)",
-            "html": "<pre>  ◇ 0 errors, 0 warnings\n  ◇ 0 issues across 9 sample(s)\n  ◇ 0 errors, 0 warnings\nrender: 0\nduração pedida: 30.389 s\nOK: 30,4 s · 1920×1080 · 30 fps · com áudio\nsaída: 0</pre><p>Render de 30 s em uns 45 s nesta máquina (render por software, <code>--workers 2</code>). A duração pedida sai do <code>data-duration</code> da raiz, então o conferidor vale para qualquer roteiro seu.</p>"
+            "html": "<pre>  ◇ 0 errors, 0 warnings\n  ◇ 0 issues across 9 sample(s)\n  ◇ 0 errors, 0 warnings\nrender: 0\nduração pedida: 30.389 s\nOK: 30,4 s · 1920×1080 · 30 fps · com áudio\nsaída: 0</pre><p>Nesta máquina o render de 30 s levou menos de um minuto (medido fora da captura; render por software, <code>--workers 2</code>). A duração pedida sai do <code>data-duration</code> da raiz, então o conferidor vale para qualquer roteiro seu.</p>"
           }
         ]
       }

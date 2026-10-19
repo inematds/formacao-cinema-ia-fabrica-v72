@@ -1,0 +1,243 @@
+{
+  "slug": "edicao",
+  "num": 6,
+  "menu": "Edición",
+  "titulo": "Edición por agente: tu editor de reels",
+  "titulo_curto": "Tu editor de reels",
+  "minutos": 15,
+  "lead": "forja-reel no edita video: te entrevista y genera una skill tuya que edita, con tu identidad y un motor de corte y ritmo probado por dentro. En esta clase abres el paquete publicado, ves qué recibe la skill hija y usas el lint de ritmo local para reprobar un hueco en la timeline antes del render.",
+  "objetivo": "entender qué genera forja-reel y reprobar un hueco de ritmo en la timeline con el lint local antes de renderizar.",
+  "competencias": [
+    "ler-meta-skill",
+    "conferir-ritmo-de-timeline",
+    "separar-local-de-servico-externo"
+  ],
+  "aprende": [
+    {
+      "icone": "robo",
+      "t": "Las cuatro fases de la meta-skill: entrevista, diagnóstico, generación y estreno"
+    },
+    {
+      "icone": "pasta",
+      "t": "Lo que pasa a la skill hija: scripts del motor, referencias y tu receta"
+    },
+    {
+      "icone": "relogio",
+      "t": "La regla de ritmo: ningún tramo de más de 4 s sin un beat visual"
+    },
+    {
+      "icone": "nuvem",
+      "t": "Lo que depende de un servicio externo (transcripción, b-roll) y lo que corre en tu máquina"
+    }
+  ],
+  "hero_alt": "Consola de edición con rueda de avance y teclas, y un monitor con una línea de tiempo llena de clips cortos de colores.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "De la entrevista a la skill que edita",
+      "sub": "Haz clic en cada etapa. Las cuatro primeras son de la meta-skill; la última, de la skill que ella genera.",
+      "nos": [
+        {
+          "icone": "chat",
+          "titulo": "Entrevista",
+          "sub": "fase A",
+          "detalhe": "Ocho bloques de preguntas sobre lo que editas, cómo aparece en pantalla, colores y estilo. La respuesta se vuelve perfil.json."
+        },
+        {
+          "icone": "lupa",
+          "titulo": "Entorno",
+          "sub": "fase B",
+          "detalhe": "Verifica ffmpeg, Node y HyperFrames y ofrece instalar lo que falta (opt-in). Avisa qué depende de una clave de servicio."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Generación",
+          "sub": "fase C",
+          "detalhe": "Escribe la skill hija reel-edita-[marca]: SKILL.md, scripts del motor copiados tal cual, referencias y la receta con tu estilo."
+        },
+        {
+          "icone": "play",
+          "titulo": "Estreno",
+          "sub": "fase D",
+          "detalhe": "Prueba de humo: se lee la skill hija y sus scripts inician (--help)."
+        },
+        {
+          "icone": "video",
+          "titulo": "Skill hija",
+          "sub": "edita",
+          "forte": true,
+          "detalhe": "Corte, lectura y propuesta de tratamiento, plano, construcción en HyperFrames, efectos de sonido y QC, revisor opcional. Es la que llamas con el video en bruto."
+        }
+      ],
+      "legenda": "forja-reel en el paquete download/forja-reel.skill del repositorio videos-edit-cria, commit d9a5137 (17/07/2026)."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Abrir el paquete publicado",
+      "sub": "El .skill es un zip. El bloque clona en el commit fijo, descomprime y lista referencias y scripts.",
+      "blocos": [
+        {
+          "rot": "Terminal · abrir el forja-reel",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a6; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/videos-edit-cria.git && git -C videos-edit-cria checkout -q d9a5137\nunzip -q videos-edit-cria/download/forja-reel.skill -d skill\nls skill/forja-reel/references skill/forja-reel/assets/motor-scripts"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>skill/forja-reel/assets/motor-scripts:\ncaptions.py\ncut.py\nfal-gen.py\nislands.py\nlint-timeline.py\nmake-sfx.sh\nmix-sfx.py\nverify-cut.py\n\nskill/forja-reel/references:\n01-entrevista.md\n02-diagnostico-de-ambiente.md\n03-geracao.md\n04-modelo-skill-filha.md</pre><p>Los scripts de <code>motor-scripts/</code> pasan a la skill hija sin cambios: el corte y el QC son iguales para todos; lo que cambia es el estilo.</p>"
+          },
+          {
+            "rot": "Local × servicio externo",
+            "html": "<p>El propio SKILL.md avisa: sin una clave de Groq (servicio externo, plan gratis), el corte automático y el control de repeticiones no funcionan, porque la transcripción por palabra viene de ahí. <code>fal-gen.py</code> genera b-roll en un servicio de pago y solo entra si tú lo activas. <code>lint-timeline.py</code> corre solo con Python, en tu máquina.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El lint de ritmo",
+      "sub": "Dos timelines 9:16 de 15 s en el kit: una con un beat cada 1,5 s y otra con un hueco de 6,5 s.",
+      "blocos": [
+        {
+          "rot": "Terminal · revisar el ritmo",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\ncd ${TMPDIR:-/tmp}/ensaio-fabrica/a6; L=skill/forja-reel/assets/motor-scripts/lint-timeline.py\npython3 $L \"$K/exemplos/a6-ritmo/ritmo-ok.html\" | grep -E \"^Duração|ERROR\"; echo \"saída: ${PIPESTATUS[0]}\"\npython3 $L \"$K/exemplos/a6-ritmo/ritmo-buraco.html\" | grep -E \"^Duração|ERROR\"; echo \"saída: ${PIPESTATUS[0]}\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>Duração 15.00s · 1080x1920 · 10 beats · densidade média 5.33 beats/10s\nsaída: 0\nDuração 15.00s · 1080x1920 · 5 beats · densidade média 2.67 beats/10s\nERRORS\nL2.50 ERROR Buraco de 6.5s entre 2.5s e 9.0s — coloque um beat (snap/selo/B-roll) sincronizado com uma palavra-âncora\nsaída: 1</pre><p>La primera pasa con un aviso (cortado aquí): la última ventana de 10 s tiene solo 5 s de video y siempre parece lenta. La segunda reprueba con la línea y el tiempo exacto del hueco.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "El fragmento que marca la diferencia",
+      "sub": "Cada beat es un fromTo en la timeline de GSAP, en el segundo en que entra. El lint lee esos tiempos sin abrir el navegador.",
+      "blocos": [
+        {
+          "rot": "Fragmento · kit/exemplos/a6-ritmo/ritmo-buraco.html",
+          "icone": "arquivo",
+          "conteudo": "      tl.fromTo(\"#b1\", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 2.5);\n      tl.fromTo(\"#b2\", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 9);"
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Paquete abierto, hueco encontrado y arreglado.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · El paquete",
+          "min": "5 min",
+          "texto": "Ejecuta \"abrir el forja-reel\".",
+          "pronto": "La lista muestra <code>01-entrevista.md</code> hasta <code>04-modelo-skill-filha.md</code> y, en motor-scripts, <code>lint-timeline.py</code> y <code>verify-cut.py</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Hueco reprobado",
+          "min": "5 min",
+          "texto": "Ejecuta \"revisar el ritmo\".",
+          "pronto": "<code>10 beats</code> con <code>saída: 0</code>, y después <code>ERROR Buraco de 6.5s entre 2.5s e 9.0s</code> con <code>saída: 1</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Arreglo",
+          "min": "10 min",
+          "texto": "Copia ritmo-buraco.html a ${TMPDIR:-/tmp}/ensaio-fabrica/a6/meu-ritmo.html y agrega un beat entre 2,5 s y 9 s (un elemento nuevo y un fromTo en el segundo 5,5).",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a6 && python3 skill/forja-reel/assets/motor-scripts/lint-timeline.py meu-ritmo.html | grep -c ERROR; echo \"saída: ${PIPESTATUS[0]}\"</code> → <code>0</code> y <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "sub": "La explicación aparece después de tu respuesta.",
+      "perguntas": [
+        {
+          "p": "¿Qué entrega el forja-reel al final?",
+          "opcoes": [
+            "Un reel ya editado, listo para publicar.",
+            "Una skill tuya que edita reels.",
+            "Una lista de 165 ganchos por nicho.",
+            "Un canal publicado en automático."
+          ],
+          "certa": 1,
+          "explica": "Es una meta-skill: entrevista, revisa el entorno y genera la skill hija. Quien edita el video es la skill generada.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "El lint reprobó \"Buraco de 6.5s\". ¿Cuál es el arreglo correcto?",
+          "opcoes": [
+            "Subir --max-gap a 7 en el lint.",
+            "Reducir la duración total del video.",
+            "Poner un beat en medio del hueco.",
+            "Quitar el subtítulo de toda la timeline."
+          ],
+          "certa": 2,
+          "explica": "La regla es que ningún tramo dure más de 4 s sin un beat. Aflojar el límite esconde el problema que el lint encontró.",
+          "ref": "codigo"
+        },
+        {
+          "p": "Sin la clave de Groq, ¿qué deja de funcionar en la skill hija?",
+          "opcoes": [
+            "El corte automático y el control de repeticiones.",
+            "El lint de ritmo de la timeline.",
+            "El render de HyperFrames de la skill hija.",
+            "La entrevista de la fase A."
+          ],
+          "certa": 0,
+          "explica": "La transcripción por palabra que guía el corte viene de Groq. El lint y el render son locales.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "Metaskill",
+          "texto": "forja-reel genera tu skill de edición; no edita video."
+        },
+        {
+          "t": "Motor común",
+          "texto": "el corte, el ritmo y el QC son los mismos scripts para todos; el estilo es tuyo."
+        },
+        {
+          "t": "Ritmo",
+          "texto": "lint-timeline.py reprueba más de 4 s sin beat, antes del render."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "Forja Reel: guía de uso",
+          "href": "https://inematds.github.io/videos-edit-cria/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "Curso anterior: Forja Reel, arma tu editor de reels",
+          "href": "https://inematds.github.io/videos-edit-curso/",
+          "icone": "lista"
+        },
+        {
+          "t": "Curso 3: timeline GSAP y bibliotecas de motion",
+          "href": "https://inematds.github.io/formacao-cinema-ia-motion-v72/es/",
+          "icone": "camadas"
+        }
+      ]
+    }
+  ]
+}

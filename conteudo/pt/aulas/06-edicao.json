@@ -152,8 +152,8 @@
           "id": "e3",
           "titulo": "E3 · Conserto",
           "min": "10 min",
-          "texto": "Copie ritmo-buraco.html para /tmp/ensaio-fabrica/a6/meu-ritmo.html e acrescente um beat entre 2,5 s e 9 s (um elemento novo e um fromTo no segundo 5,5).",
-          "pronto": "<code>cd /tmp/ensaio-fabrica/a6 && python3 skill/forja-reel/assets/motor-scripts/lint-timeline.py meu-ritmo.html | grep -c ERROR; echo \"saída: ${PIPESTATUS[0]}\"</code> → <code>0</code> e <code>saída: 0</code>."
+          "texto": "Copie ritmo-buraco.html para ${TMPDIR:-/tmp}/ensaio-fabrica/a6/meu-ritmo.html e acrescente um beat entre 2,5 s e 9 s (um elemento novo e um fromTo no segundo 5,5).",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a6 && python3 skill/forja-reel/assets/motor-scripts/lint-timeline.py meu-ritmo.html | grep -c ERROR; echo \"saída: ${PIPESTATUS[0]}\"</code> → <code>0</code> e <code>saída: 0</code>."
         }
       ]
     },

@@ -1,0 +1,305 @@
+{
+  "slug": "mapa",
+  "num": 1,
+  "menu": "Mapa",
+  "titulo": "El mapa de la fábrica: de lo que tienes al motor correcto",
+  "titulo_curto": "El mapa de la fábrica",
+  "minutos": 12,
+  "lead": "INEMA tiene un motor de video para cada caso: explicativo, demostración, documental, short, publicación. Equivocarte de motor cuesta horas. En esta clase conviertes la tabla del área Vídeos en un comando que responde cuál usar, y preparas la máquina para las próximas siete clases.",
+  "objetivo": "elegir el motor correcto para lo que tienes y quieres, con la tabla del área Vídeos convertida en comando.",
+  "competencias": [
+    "escolher-motor",
+    "preparar-ambiente",
+    "ler-tabela-de-decisao"
+  ],
+  "aprende": [
+    {
+      "icone": "lista",
+      "t": "Las 14 líneas de la tabla \"Por onde começar\" del área Vídeos"
+    },
+    {
+      "icone": "portao",
+      "t": "Lo que todo motor tiene en común: entrada declarada y compuerta antes del crédito"
+    },
+    {
+      "icone": "terminal",
+      "t": "Verificar git, Python, Node y FFmpeg antes de clonar los motores"
+    },
+    {
+      "icone": "seta",
+      "t": "En qué clase (o curso hermano) aparece cada motor"
+    }
+  ],
+  "hero_alt": "Pared oscura con fichas blancas sujetas en forma de diagrama de flujo, unidas por hilos que bajan hasta una mesa con monitores.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "De lo que tienes al motor",
+      "sub": "Haz clic en cada etapa.",
+      "nos": [
+        {
+          "icone": "pasta",
+          "titulo": "Tienes",
+          "sub": "la entrada",
+          "detalhe": "Un tema, el enlace de tu app, un video de referencia, fotos, un video terminado. Es la primera columna de la tabla del área Vídeos."
+        },
+        {
+          "icone": "alvo",
+          "titulo": "Tú quieres",
+          "sub": "la salida",
+          "detalhe": "Explicativo con avatar, demostración, documental, short 9:16, publicación en YouTube. La misma entrada lleva a motores diferentes según la salida."
+        },
+        {
+          "icone": "chip",
+          "titulo": "Motor",
+          "sub": "el sistema",
+          "detalhe": "Explicavideos, video-demonstrativo, docflow, refazvideo, MakeShorts, cardshorts, forja-reel, yt-pubx. Cada uno es un repositorio público de INEMA en GitHub."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Compuerta",
+          "sub": "antes del crédito",
+          "detalhe": "Todo motor de este curso tiene un punto en el que pasaría a gastar crédito o publicar. Las prácticas se detienen ahí, con la salida verificada."
+        },
+        {
+          "icone": "check",
+          "titulo": "Clase",
+          "sub": "dónde aprender",
+          "forte": true,
+          "detalhe": "El comando de la lección indica en qué lección de este curso aparece el motor, o qué curso hermano es dueño del tema."
+        }
+      ],
+      "legenda": "La tabla es la del área Vídeos de INEMA (eventos.inema.pro/videos/, sección \"Por dónde empezar\"), leída el 19/10/2026."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Tres reglas que valen para todos los motores",
+      "sub": "Es lo que hace que la fábrica sea repetible.",
+      "passos": [
+        {
+          "titulo": "Commit fijo",
+          "texto": [
+            "Los motores cambian cada semana. Las prácticas clonan cada uno desde GitHub y hacen checkout de un commit exacto, el mismo en el que se capturó la salida de la lección.",
+            "Cuando quieras la versión nueva, cambia el commit y ejecuta el bloque de nuevo: si la salida cambia, sabes que fue el motor."
+          ]
+        },
+        {
+          "titulo": "Entrada declarada",
+          "texto": [
+            "Cada motor lee un archivo: escenas en JSON, actions.json, tema en YAML, guion en Markdown. El agente escribe ese archivo; el motor hace el resto.",
+            "Revisar el archivo es barato. Revisar el video terminado es caro."
+          ]
+        },
+        {
+          "titulo": "Compuerta antes del crédito",
+          "texto": [
+            "El avatar, el video generado por IA y el envío a YouTube quedan del otro lado de una compuerta: aprobación humana, formulario de consentimiento, modo de ensayo.",
+            "En este curso nada pasa de la compuerta. Aprendes a llegar hasta ella con todo verificado."
+          ],
+          "exemplo": {
+            "rot": "Ejemplo",
+            "texto": "Explicavideos monta escenas y bloques sin tocar el estudio de avatar; solo el comando start genera video, y el propio --help lo avisa en mayúsculas."
+          }
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Preparar la máquina",
+      "sub": "Clona el repositorio del curso en ~/projetos y verifica las cuatro herramientas que usan todas las lecciones.",
+      "blocos": [
+        {
+          "rot": "Una vez · clonar el curso",
+          "icone": "terminal",
+          "conteudo": "mkdir -p ~/projetos && cd ~/projetos\ngit clone https://github.com/inematds/formacao-cinema-ia-fabrica-v72.git"
+        },
+        {
+          "rot": "Terminal · verificar el entorno",
+          "icone": "terminal",
+          "conteudo": "for c in git python3 node ffmpeg; do printf \"%-8s\" \"$c\"; command -v $c > /dev/null && echo ok || echo FALTA; done\nnode --version; ffmpeg -version | head -1 | cut -d' ' -f1-3; python3 --version"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>git     ok\npython3 ok\nnode    ok\nffmpeg  ok\nv24.13.0\nffmpeg version 6.1.1-3ubuntu5\nPython 3.12.3</pre><p>Las versiones son las de esta máquina. Cualquier Node 22+ y FFmpeg 6+ sirven; la línea que importa es <code>ok</code> en las cuatro herramientas.</p>"
+          },
+          {
+            "rot": "Si aparece FALTA",
+            "html": "<p>Instálalo con el gestor de tu sistema (<code>apt</code>, <code>brew</code>) y ejecuta el bloque de nuevo. En Windows, ejecuta todo dentro de WSL: los motores llaman a <code>bash</code>, <code>ffmpeg</code> y rutas Unix.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "La tabla convertida en comando",
+      "sub": "El kit trae las 14 filas en qual-motor.py. Tú pasas lo que tienes y lo que quieres; él responde el motor y la lección.",
+      "blocos": [
+        {
+          "rot": "Terminal · preguntarle al mapa",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\npython3 \"$K/qual-motor.py\" --lista | tail -3\npython3 \"$K/qual-motor.py\" tema short; echo \"saída: $?\"\npython3 \"$K/qual-motor.py\" tema podcast; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Salida capturada (19/10/2026)",
+            "html": "<pre>frase         clipe        → musicavideo (fora deste curso (guia da área Vídeos))\nvideo-pronto  publicar     → yt-pubx (aula 8)\n14 linhas\nShort ou reel 9:16 com gancho\nUse: MakeShorts ou cardshorts · aprender: aula 5\nsaída: 0\nSEM MOTOR: com 'tema' a tabela tem: explicativo, documentario, short\nsaída: 1</pre><p>Una combinación que no está en la tabla sale con <code>SEM MOTOR</code> y código 1, listando lo que existe para esa entrada. Usa <code>--lista</code> para ver las 14 filas.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Los motores de este curso y los que quedan con los hermanos",
+      "sub": "El mapa cubre más de lo que enseña este curso. Sigue el enlace correcto.",
+      "passos": [
+        {
+          "titulo": "Aquí",
+          "texto": [
+            "Explicavideos (lección 2), video-demonstrativo (lección 3), docflow y refazvideo (lección 4), MakeShorts y cardshorts (lección 5), forja-reel (lección 6), avatar y consentimiento (lección 7), yt-pubx (lección 8)."
+          ]
+        },
+        {
+          "titulo": "En los hermanos",
+          "texto": [
+            "Película con fotos y cámara 2.5D y anuncio UGC: <a href=\"https://inematds.github.io/formacao-cinema-ia-producao-v72/es/\">curso 2</a>. Película de la marca a partir del sitio web: curso 5. HyperFrames y Remotion por dentro: curso 3."
+          ]
+        },
+        {
+          "titulo": "En otra formación",
+          "texto": [
+            "El reel en 7 etapas, la cinta de canal y la agenda de publicación son de la formación Del chat al agente: <a href=\"https://inematds.github.io/do-chat-ao-agente-redes-v72/es/\">curso de redes en automático</a>."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Práctica",
+      "sub": "Máquina lista y tu primer caso en el mapa.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Entorno",
+          "min": "5 min",
+          "texto": "Clona el curso y ejecuta el bloque \"conferir o ambiente\".",
+          "pronto": "Las cuatro líneas <code>git</code>, <code>python3</code>, <code>node</code> y <code>ffmpeg</code> terminan en <code>ok</code>, y <code>node --version</code> muestra v22 o más."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · El mapa responde",
+          "min": "5 min",
+          "texto": "Ejecuta el bloque \"perguntar ao mapa\".",
+          "pronto": "La salida tiene <code>14 linhas</code>, <code>Use: MakeShorts ou cardshorts · aprender: aula 5</code> con <code>saída: 0</code> y <code>SEM MOTOR: com 'tema' a tabela tem: explicativo, documentario, short</code> con <code>saída: 1</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Tu caso",
+          "min": "5 min",
+          "texto": "Piensa en el próximo video que necesitas hacer. Encuentra su línea con <code>--lista</code> y pregúntale al mapa.",
+          "pronto": "<code>python3 ~/projetos/formacao-cinema-ia-fabrica-v72/kit/qual-motor.py [tengo] [quiero]; echo \"saída: $?\"</code> → una línea <code>Use: …</code> y <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Prueba de la clase",
+      "sub": "La explicación aparece después de tu respuesta.",
+      "perguntas": [
+        {
+          "p": "Tienes el enlace de tu app y quieres mostrar cómo se usa. ¿Qué motor?",
+          "opcoes": [
+            "Explicavideos, que parte de un tema y pone avatar.",
+            "docflow, que hace documental narrado.",
+            "video-demonstrativo.",
+            "yt-pubx, que publica el video en YouTube."
+          ],
+          "certa": 2,
+          "explica": "La línea \"O link do seu app → Demonstração narrada, clique a clique\" apunta a video-demonstrativo (clase 3). Explicavideos parte de un tema, no de una app en línea.",
+          "ref": "codigo"
+        },
+        {
+          "p": "¿Por qué las prácticas clonan cada motor en un commit fijo?",
+          "opcoes": [
+            "Para que la salida de la clase siga siendo válida.",
+            "Porque GitHub solo deja clonar commits antiguos de repositorios públicos.",
+            "Para no tener que instalar Python, Node ni FFmpeg en la máquina.",
+            "Porque la versión más nueva de todos los motores gasta crédito sola."
+          ],
+          "certa": 0,
+          "explica": "Los motores cambian cada semana. Con el commit fijo, el bloque da la misma salida capturada; si cambia después de que cambies el commit, la diferencia vino del motor.",
+          "ref": "passos"
+        },
+        {
+          "p": "¿Qué es la \"compuerta antes del crédito\" en este curso?",
+          "opcoes": [
+            "Un botón de pago que cada motor muestra antes de ejecutar.",
+            "El punto donde el motor gastaría crédito o publicaría.",
+            "Una etapa que solo existe en yt-pubx, antes del envío.",
+            "El límite de memoria que systemd pone al render."
+          ],
+          "certa": 1,
+          "explica": "El avatar, el video generado por IA y el envío a YouTube quedan detrás de una compuerta (aprobación, formulario de consentimiento, modo de ensayo). Las prácticas llegan hasta ella con la salida verificada y se detienen.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Quieres un reel en 7 etapas con agenda de publicación. ¿Dónde aprender?",
+          "opcoes": [
+            "En la clase 5 de este curso, que trata de shorts.",
+            "En la clase 8 de este curso, que trata de publicación.",
+            "En el curso 2 de la formación, el de producción.",
+            "En el curso de redes de Del chat al agente."
+          ],
+          "certa": 3,
+          "explica": "El reel en 7 etapas y la cinta de canal son propiedad de do-chat-ao-agente-redes-v72. Aquí, la clase 5 se ocupa solo del gancho y de la compuerta de calidad del short.",
+          "ref": "passos"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "En tres frases",
+      "itens": [
+        {
+          "t": "Mapa",
+          "texto": "lo que tienes y lo que quieres deciden el motor; qual-motor.py responde."
+        },
+        {
+          "t": "Commit fijo",
+          "texto": "cada práctica clona el motor en un commit exacto para que la salida sea válida."
+        },
+        {
+          "t": "Compuerta",
+          "texto": "la práctica se detiene donde el motor gastaría crédito o publicaría."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir más allá",
+      "links": [
+        {
+          "t": "Área Vídeos de INEMA: la tabla \"Por dónde empezar\"",
+          "href": "https://eventos.inema.pro/videos/",
+          "icone": "video"
+        },
+        {
+          "t": "El kit de este curso en GitHub",
+          "href": "https://github.com/inematds/formacao-cinema-ia-fabrica-v72/tree/main/kit",
+          "icone": "git"
+        },
+        {
+          "t": "Curso 3: Motion por código (HyperFrames y Remotion)",
+          "href": "https://inematds.github.io/formacao-cinema-ia-motion-v72/es/",
+          "icone": "camadas"
+        }
+      ]
+    }
+  ]
+}

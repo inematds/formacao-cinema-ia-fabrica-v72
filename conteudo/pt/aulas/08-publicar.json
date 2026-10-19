@@ -244,8 +244,8 @@
           "id": "e3",
           "titulo": "E3 · O seu vídeo em ensaio",
           "min": "15 min",
-          "texto": "Com as duas variáveis do bloco exportadas, rode o mesmo publicar com um vídeo seu (o da aula 3 serve), o seu título, a sua descrição e as suas tags.",
-          "pronto": "<code>./yt-pubx/yt-pubx publicar [seu.mp4] --dry-run --sem-thumb --title \"…\" --description \"…\" --tags \"…\" 2>&1 | grep -c \"nada foi enviado\"</code> → <code>1</code>."
+          "texto": "Na pasta do ensaio (<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a8</code>), exporte as duas variáveis como no bloco (<code>export YTPUBX_CONFIG=\"$PWD/config\" YTPUBX_DATA=\"$PWD/dados\"</code>) e rode o mesmo publicar com um vídeo seu (o da aula 3 serve), o seu título, a sua descrição e as suas tags.",
+          "pronto": "<code>./yt-pubx/yt-pubx publicar [seu.mp4] --dry-run --sem-thumb --title \"…\" --description \"…\" --tags \"…\" 2>&1 | grep -c \"nada foi enviado\"; echo \"saída: ${PIPESTATUS[0]}\"</code> → <code>1</code> e <code>saída: 0</code>."
         }
       ]
     },

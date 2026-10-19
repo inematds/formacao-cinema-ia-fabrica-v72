@@ -1,0 +1,268 @@
+{
+  "slug": "avatar",
+  "num": 7,
+  "menu": "Avatar",
+  "titulo": "Talking avatar: studio, voice and consent",
+  "titulo_curto": "Avatar and consent",
+  "minutos": 14,
+  "lead": "A talking avatar is the most expensive step in the factory and the most sensitive: it's a person's face and voice. In this lesson you'll see how the studio fits into the pipeline and write two pieces of your own: the avatar's consent form and a gate that doesn't let any generation start without a valid consent form.",
+  "objetivo": "write the consent form for your avatar and put in a gate that closes any generation without a valid consent form.",
+  "competencias": [
+    "escrever-termo-de-consentimento",
+    "conferir-termo-por-script",
+    "fechar-geracao-sem-termo"
+  ],
+  "aprende": [
+    {
+      "icone": "usuario",
+      "t": "Whose avatar it can be: only the person's own, with a consent form"
+    },
+    {
+      "icone": "arquivo",
+      "t": "The seven fields of the consent form: person, what it authorizes, use, languages, validity, revocation and label"
+    },
+    {
+      "icone": "portao",
+      "t": "A gate in a script before the studio, because the engine's own is just a written rule"
+    },
+    {
+      "icone": "relogio",
+      "t": "HeyGen's Avatar V as a dated example (Apr/2026), not as a fixed step"
+    }
+  ],
+  "hero_alt": "A recording corner with a cinema camera on a tripod pointed at an empty chair in front of a gray backdrop, and a consent form with illegible text on the table.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "The path to the studio",
+      "sub": "Click each step. The studio only opens after the gate.",
+      "nos": [
+        {
+          "icone": "usuario",
+          "titulo": "Person",
+          "sub": "yourself",
+          "detalhe": "The avatar belongs to whoever appears and speaks, and no one else. No face or voice of another person, public figure or real character."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Consent form",
+          "sub": "7 fields",
+          "detalhe": "Plain text, one line per field: Pessoa, Autoriza, Uso, Idiomas, Validade, Revogação, Rótulo."
+        },
+        {
+          "icone": "check",
+          "titulo": "Checker",
+          "sub": "script",
+          "detalhe": "conferir-consentimento.py rejects a missing field, a label without \"IA\" and an expired consent form. It exits 0 only when everything matches."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Gate",
+          "sub": "before start",
+          "forte": true,
+          "detalhe": "portao-avatar.sh runs the checker and estimates the script's duration. If the consent form doesn't pass, it stops with code 1 and nothing moves on."
+        },
+        {
+          "icone": "video",
+          "titulo": "Studio",
+          "sub": "credit",
+          "detalhe": "The generation itself: the avatar service's studio, through the account of whoever owns the avatar. It stays outside this course."
+        }
+      ],
+      "legenda": "explicavideos and refazvideo ask for the APROVADO_HEYGEN file before start, but the code doesn't check it. The gate in this lesson is the one that really closes."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The studio, in Oct/2026",
+      "sub": "Dated example: names and features change. What doesn't change is the consent form.",
+      "passos": [
+        {
+          "titulo": "HeyGen",
+          "texto": [
+            "Avatar V, introduced in Apr/2026: identity created from about 15 s of footage, separating identity from appearance; in May/2026, motion direction in natural language (research §3). It's the studio INEMA's engines use, through the subscription."
+          ]
+        },
+        {
+          "titulo": "Others",
+          "texto": [
+            "Synthesia Express-2 (Sep/2025, full body). Hedra Omnia and OmniHuman 1.5 appear in secondary sources: reported, not confirmed in an official source as of 10/19/2026."
+          ]
+        },
+        {
+          "titulo": "Lip sync",
+          "texto": [
+            "In generators with native audio, the mouth comes out together with the speech. In avatars, the studio syncs from the audio or from the text. Generators and native audio: <a href=\"https://inematds.github.io/formacao-cinema-ia-geracao-v72/en/\">course 1</a>."
+          ]
+        },
+        {
+          "titulo": "Label and law",
+          "texto": [
+            "It also works with no avatar at all: local voice and scenes, like the demo in lesson 3 and course 3. The AI-generated content label, image and voice rights, and the AI Act are covered in <a href=\"https://inematds.github.io/formacao-cinema-ia-producao-v72/en/aulas/etica/\">course 2, lesson 7</a>. Here the consent form only requires that the label exists and mentions AI."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The consent form",
+      "sub": "Fictional example in the kit. Yours is the same, with your own details.",
+      "blocos": [
+        {
+          "rot": "File · kit/exemplos/a7-termo/termo.md",
+          "icone": "arquivo",
+          "conteudo": "# Termo de uso de avatar e voz (exemplo fictício)\nPessoa: Ana Exemplo\nAutoriza: a própria Ana, dona do canal, autoriza avatar com o rosto dela e a voz clonada dela\nUso: vídeos dos cursos gratuitos do canal dela e cortes desses vídeos\nIdiomas: português, inglês e espanhol\nValidade: 31/12/2027\nRevogação: pedido por escrito; vídeos novos param no mesmo dia, os publicados saem em até 30 dias\nRótulo: \"Avatar e voz gerados por IA com autorização de Ana Exemplo\" no canto do vídeo e na descrição"
+        },
+        {
+          "rot": "Terminal · check the consent form",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\npython3 \"$K/conferir-consentimento.py\" \"$K/exemplos/a7-termo/termo.md\"; echo \"saída: $?\"\npython3 \"$K/conferir-consentimento.py\" \"$K/exemplos/a7-termo/termo-sem-rotulo.md\"; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027\nsaída: 0\nFALTA: Rótulo\nsaída: 1</pre><p>The second file is the same consent form without the Rótulo line. The field labels also work in English and Spanish (Person, Label, Etiqueta…).</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The gate",
+      "sub": "The script doesn't call any studio: it only decides whether you can open the studio and how many seconds you will ask for.",
+      "blocos": [
+        {
+          "rot": "File · kit/portao-avatar.sh",
+          "icone": "arquivo",
+          "conteudo": "#!/usr/bin/env bash\n# portao-avatar.sh — porta de entrada de qualquer geração de avatar: sem termo conferido, nada segue.\n# Uso: bash portao-avatar.sh <termo.md> <roteiro.txt>\n# Não chama estúdio nenhum: só decide se você PODE abrir o estúdio, e quantos minutos vai pedir.\nK=$(cd \"$(dirname \"$0\")\" && pwd)\ntermo=\"${1:?uso: portao-avatar.sh <termo.md> <roteiro.txt>}\"; roteiro=\"${2:?falta o roteiro}\"\npython3 \"$K/conferir-consentimento.py\" \"$termo\" || { echo \"PORTÃO FECHADO: corrija o termo antes de gerar\"; exit 1; }\np=$(wc -w < \"$roteiro\")\necho \"roteiro: $p palavras ≈ $(( (p * 60 + 139) / 140 )) s a 140 palavras/min\"\necho \"PORTÃO ABERTO: pode levar ao estúdio (a geração gasta crédito: confira o plano antes)\""
+        },
+        {
+          "rot": "Terminal · gate open and closed",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit; X=$K/exemplos/a7-termo\nbash \"$K/portao-avatar.sh\" \"$X/termo.md\" \"$X/roteiro.txt\"; echo \"saída: $?\"\nbash \"$K/portao-avatar.sh\" \"$X/termo-sem-rotulo.md\" \"$X/roteiro.txt\"; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027\nroteiro: 37 palavras ≈ 16 s a 140 palavras/min\nPORTÃO ABERTO: pode levar ao estúdio (a geração gasta crédito: confira o plano antes)\nsaída: 0\nFALTA: Rótulo\nPORTÃO FECHADO: corrija o termo antes de gerar\nsaída: 1</pre><p>Put the gate call as the first line of your production script, before start: with <code>set -e</code>, exit code 1 stops everything.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "Your consent form and your gate.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Checker",
+          "min": "5 min",
+          "texto": "Run \"check the consent form\".",
+          "pronto": "<code>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027</code> with <code>saída: 0</code>, and <code>FALTA: Rótulo</code> with <code>saída: 1</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Your consent form",
+          "min": "15 min",
+          "texto": "Write <code>~/meu-termo.md</code> with the seven fields, using your own details and whatever expiration date makes sense for you.",
+          "pronto": "<code>python3 ~/projetos/formacao-cinema-ia-fabrica-v72/kit/conferir-consentimento.py ~/meu-termo.md; echo \"saída: $?\"</code> → <code>OK: termo de [your name] · 7 campos · válido até …</code> and <code>saída: 0</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Gate on your script",
+          "min": "5 min",
+          "texto": "Run the gate with your consent form and one of your own scripts as a text file.",
+          "pronto": "<code>bash ~/projetos/formacao-cinema-ia-fabrica-v72/kit/portao-avatar.sh ~/meu-termo.md [your-script.txt]; echo \"saída: $?\"</code> → <code>PORTÃO ABERTO</code> and <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "sub": "The explanation appears after you answer.",
+      "perguntas": [
+        {
+          "p": "A client asks for a video with the avatar of a famous presenter. What does this lesson's consent form allow?",
+          "opcoes": [
+            "Yes, if the video carries an AI label.",
+            "Yes, if it's for a free course.",
+            "Yes, if the client signs the consent form on the presenter's behalf.",
+            "No: the avatar belongs only to the person themselves, with their own consent form."
+          ],
+          "certa": 3,
+          "explica": "The Pessoa field is who appears and speaks, and that person is the one who authorizes. A label does not replace consent.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Why put a gate in a script if the engine already asks for APROVADO_HEYGEN?",
+          "opcoes": [
+            "The engine's file is not checked by the code.",
+            "Because HeyGen requires a bash script to generate.",
+            "Because the gate makes the avatar cheaper in the studio.",
+            "Because APROVADO_HEYGEN expires on its own after 24 h."
+          ],
+          "certa": 0,
+          "explica": "A rule that depends on someone remembering fails on a busy day. A script that exits with code 1 really closes the gate.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "The checker answers \"VENCIDO: validade 31/12/2025\". What should you do?",
+          "opcoes": [
+            "Change the date in the file and go ahead with production.",
+            "Ask the person for a new consent form.",
+            "Delete the Validade line so the script doesn't look at it.",
+            "Run the studio with --force and see what happens."
+          ],
+          "certa": 1,
+          "explica": "The expiration date is part of what the person authorized. New consent form, signed by them, and only then does the gate open.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "Person",
+          "texto": "the avatar and voice belong to the person themselves, with their own consent form."
+        },
+        {
+          "t": "Consent form",
+          "texto": "seven fields, checked by script, with a label that mentions AI."
+        },
+        {
+          "t": "Gate",
+          "texto": "code 1 without a valid consent form; the studio only after that."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "HeyGen: Avatar V introduction (Apr/2026)",
+          "href": "https://www.heygen.com/en-ca/events/introducing-avatar-v-a-live-walkthrough-of-heygens-most-advanced-ai-avatar-model-yet",
+          "icone": "video"
+        },
+        {
+          "t": "Course 2, lesson 7: ethics and law (label, image, voice)",
+          "href": "https://inematds.github.io/formacao-cinema-ia-producao-v72/en/aulas/etica/",
+          "icone": "escudo"
+        },
+        {
+          "t": "European Commission: code of practice on marking AI-generated content",
+          "href": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content",
+          "icone": "lista"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "id": "formacao-cinema-ia-fabrica-v72",
+  "lang": "es",
+  "url": "https://inematds.github.io/formacao-cinema-ia-fabrica-v72/es/",
+  "nome": "La fábrica de video con agentes",
+  "sub": "Formación Cine con IA · curso 4 de 6",
+  "volta": {
+    "t": "Área Videos de INEMA",
+    "href": "https://eventos.inema.pro/videos/"
+  },
+  "lado_card": {
+    "rot": "Kit del curso",
+    "t": "Bloques probados y verificadores",
+    "texto": "Toda la salida de las clases sale de la carpeta kit/ de este repositorio. Clona en ~/projetos y ejecuta los mismos bloques.",
+    "link": "Abrir el kit en GitHub",
+    "href": "https://github.com/inematds/formacao-cinema-ia-fabrica-v72/tree/main/kit"
+  },
+  "rodape": "INEMA.CLUB · contenido abierto y gratuito · formato INEMA Learning v7.2 · Formación Cine con IA, curso 4 de 6 · <a href=\"https://eventos.inema.pro/videos/\">eventos.inema.pro/videos</a> · <a href=\"https://inema.club/\">inema.club</a> · <a href=\"https://www.inema.club/aprender-inteligencia-artificial/\">Guía: cómo aprender inteligencia artificial</a>",
+  "videos": {
+    "iacultivada": {
+      "titulo": "IA Cultivada: un explicativo que salió del explicavideos",
+      "duracao": "10 min",
+      "mp4": "https://github.com/inematds/iacultivada/releases/download/video-v2.0.0/iacultivada-pt.mp4",
+      "poster": "assets/img/poster-iacultivada.jpg",
+      "vtt": "assets/vtt/iacultivada-pt.vtt",
+      "pagina": "https://inematds.github.io/iacultivada/videos/",
+      "idiomas": {
+        "en": {
+          "mp4": "https://github.com/inematds/iacultivada/releases/download/video-v2.0.0/iacultivada-en.mp4",
+          "vtt": "assets/vtt/iacultivada-en.vtt",
+          "duracao": "10 min",
+          "pagina": "https://inematds.github.io/iacultivada/videos/en/"
+        },
+        "es": {
+          "mp4": "https://github.com/inematds/iacultivada/releases/download/video-v2.0.0/iacultivada-es.mp4",
+          "vtt": "assets/vtt/iacultivada-es.vtt",
+          "duracao": "9 min",
+          "pagina": "https://inematds.github.io/iacultivada/videos/es/"
+        }
+      }
+    },
+    "egito": {
+      "titulo": "Antiguo Egipto en un minuto: el documental modelo del docflow",
+      "duracao": "55 s",
+      "mp4": "https://github.com/inematds/docflow/releases/download/video-v1.0.0/docflow-egito-pt.mp4",
+      "poster": "assets/img/poster-egito.jpg",
+      "vtt": "assets/vtt/egito-pt.vtt",
+      "pagina": "https://inematds.github.io/docflow/guia/"
+    }
+  },
+  "inicio": {
+    "kicker": "Formación Cine con IA · curso 4 de 6 · 8 clases",
+    "titulo": "La fábrica de video con agentes: los motores abiertos de INEMA, del tema al video publicado",
+    "lead": "Explicativo con avatar, demostración de app, documental, short con compuerta de calidad, editor de reels y publicación. Tú ejecutas cada motor de INEMA en tu máquina, en un commit fijo, hasta el punto en que gastaría crédito, y te detienes ahí con la salida verificada.",
+    "cta": "Empezar por la clase 1",
+    "cta2": {
+      "t": "Abrir el kit en GitHub",
+      "href": "https://github.com/inematds/formacao-cinema-ia-fabrica-v72/tree/main/kit"
+    },
+    "capa_alt": "Sala de edición oscura con dos monitores de línea de tiempo y código, una claqueta y un rack de computadoras; a la izquierda el título del curso.",
+    "numeros": [
+      {
+        "v": "8",
+        "t": "clases"
+      },
+      {
+        "v": "8",
+        "t": "motores en un commit fijo"
+      },
+      {
+        "v": "22",
+        "t": "bloques probados en el kit"
+      },
+      {
+        "v": "0",
+        "t": "créditos gastados"
+      }
+    ],
+    "aulas_titulo": "Las clases",
+    "aulas_sub": "Del mapa a YouTube: explicativo, demostración, documental, short, edición, avatar y publicación.",
+    "blocos": [
+      {
+        "t": "Para quién es",
+        "itens": [
+          "Quien ya usa Claude Code o Codex en la terminal y quiere producir video en serie, no uno por uno.",
+          "Quien hace video para un curso, una empresa o un canal y necesita saber qué motor usar en cada caso.",
+          "Quien quiere entender por dentro un pipeline de video con agentes: entrada, compuertas y salida verificada."
+        ]
+      },
+      {
+        "t": "Lo que vas a saber hacer",
+        "itens": [
+          "Elegir el motor correcto para lo que tienes y quieres, con un comando.",
+          "Armar escenas y bloques de un explicativo y capturar una demostración de app clic a clic.",
+          "Reprobar un short fuera del estándar y un hueco de ritmo antes de renderizar.",
+          "Poner una compuerta de consentimiento antes del avatar y ensayar la publicación sin enviar nada."
+        ]
+      },
+      {
+        "t": "Antes de empezar",
+        "itens": [
+          "Linux o macOS con git, Python 3 (con PyYAML y Pillow: pip install pyyaml pillow), Node 22 o más nuevo y FFmpeg. En Windows, usa WSL.",
+          "Espacio libre (estimación: unos 2 GB): el navegador del render y la voz local se descargan la primera vez que se usan. La clase 3 usa el agent-browser.",
+          "Recomendado: el curso 3 (Motion por código), que enseña el HyperFrames que estos motores usan."
+        ]
+      }
+    ]
+  },
+  "ui": {
+    "pular": "Saltar al contenido",
+    "aulas": "Clases",
+    "concluido": "completado",
+    "aula": "Clase",
+    "nesta_aula": "En esta clase, vas a aprender:",
+    "objetivo": "Objetivo:",
+    "proxima_aula": "Próxima clase",
+    "aula_anterior": "Clase anterior",
+    "voltar_inicio": "Volver al inicio del curso",
+    "marcar_concluida": "Marcar la clase como completada",
+    "dg_dica": "Haz clic en cada bloque del diagrama para ver qué hace.",
+    "copiar": "Copiar",
+    "copiado": "Copiado",
+    "selo_simulacao": "Simulación: ejemplo ilustrativo",
+    "selo_real": "Ejemplo del repositorio",
+    "pronto_quando": "Listo cuando:",
+    "fiz": "Hice este ejercicio",
+    "video_pagina": "Página del video con guion",
+    "pergunta": "Pregunta",
+    "de": "de",
+    "cert_tag": "competencia",
+    "correto": "Correcto",
+    "errado": "No es esa",
+    "quiz_aguarda": "Elige una alternativa. La explicación aparece después de tu intento.",
+    "proxima_pergunta": "Siguiente pregunta",
+    "quiz_ver": "Ver resultado",
+    "quiz_fim": "Prueba completada",
+    "quiz_total": "Acertaste {a} de {n}. Si aciertas todas, la clase se marca como completada.",
+    "aparencia": "Apariencia",
+    "tamanho_texto": "Tamaño del texto",
+    "tema": "Tema",
+    "tema_escuro": "Oscuro",
+    "tema_papel": "Papel claro",
+    "role_dica": "Desplázate por la página: cada etapa de abajo enciende su parte del diagrama.",
+    "pre_requisito": "requiere",
+    "ver_aula": "Ver la clase",
+    "mapa_dica": "Haz clic en un ejercicio para ver qué hacer y el \"listo cuando\".",
+    "etapas": "Etapas",
+    "exercicios": "ejercicios",
+    "rever": "Repasar:",
+    "revisar_erradas": "Revisar las incorrectas",
+    "refazer": "Rehacer la prueba",
+    "h_semana": "h por semana",
+    "data_inicio": "Fecha de inicio",
+    "ritmo": "Tiempo disponible",
+    "gerar_plano": "Generar mi plan",
+    "baixar_md": "Descargar plano.md",
+    "baixar_ics": "Descargar para el calendario (.ics)",
+    "ind_estudo": "Estudio (clases)",
+    "ind_pratica": "Práctica declarada",
+    "ind_nota": "Práctica = ejercicios que marcaste como hechos. La comprobación viene en el examen de la certificación.",
+    "estudo": {
+      "titulo": "Tu estudio",
+      "continuar": "Continuar donde lo dejé",
+      "comecar": "Empezar por la clase 1",
+      "cta_continuar": "Continuar la clase {n}",
+      "hoje": "hoy",
+      "ontem": "ayer",
+      "ha_dias": "hace {n} días",
+      "desempenho": "Resultados en los tests",
+      "notas": "Mis notas",
+      "dados": "Copiar mis datos",
+      "sem_testes": "Aún no hiciste ningún test. El test está al final de cada clase.",
+      "nao_fez": "test aún no hecho",
+      "ultimo": "Último",
+      "melhor": "Mejor",
+      "tentativas": "intentos",
+      "tentativa": "intento",
+      "tudo_certo": "Acertaste todo en el último test.",
+      "rever": "Para repasar",
+      "resposta": "Respuesta correcta:",
+      "ir_teste": "Rehacer la prueba",
+      "sem_notas": "Aún no hay notas. En la clase, selecciona un fragmento del texto y toca Marcar o Anotar.",
+      "so_marcado": "(solo marcado)",
+      "marcar": "Marcar",
+      "anotar": "Anotar",
+      "salvar": "Guardar",
+      "apagar": "Borrar marca",
+      "fechar": "Cerrar",
+      "nota_ph": "Escribe tu nota sobre este fragmento…",
+      "um_bloco": "Marca dentro de un solo párrafo.",
+      "nao_marca": "Este fragmento no se puede marcar.",
+      "dados_exp": "Tu progreso, tus notas y los resultados de los tests quedan solo en este navegador. Descarga una copia (.json) para guardarla o para continuar en otro computador o navegador; allí, carga la copia. Cargar se suma a lo que ya existe y no borra nada.",
+      "exportar": "Descargar copia",
+      "importar": "Cargar copia",
+      "import_ok": "Copia cargada ({n} elementos). Actualizando la página…",
+      "import_erro": "Archivo no reconocido. No se cambió nada.",
+      "import_outro": "Esta copia es de otro curso. No se cambió nada.",
+      "export_ok": "Copia descargada."
+    },
+    "conv_dica": "Elige tu respuesta. El comentario aparece justo después y la conversación sigue según tu elección.",
+    "conv_voce": "Tú",
+    "conv_escolha": "Tu respuesta",
+    "conv_boa": "Buena elección",
+    "conv_meio": "Se puede mejorar",
+    "conv_ruim": "Elección débil",
+    "conv_fim": "Fin de la conversación",
+    "conv_placar": "Hiciste {p} de {m} puntos posibles.",
+    "conv_licao": "Lección:",
+    "conv_recomecar": "Reiniciar la conversación",
+    "conv_feita": "Tu mejor puntaje: {p} de {m} puntos.",
+    "comecar": "Comenzar la clase",
+    "nesta_vai": "En esta clase vas a",
+    "trocar_tema": "Cambiar tema claro/oscuro",
+    "conf_vazio": "Pega el texto o carga el archivo antes de verificar.",
+    "conf_falta": "Todavía no. Lo que falta:",
+    "conf_campo": "Falta la línea {c}: con la descripción (al menos {x} letras).",
+    "conf_planos": "Encontré {n} planos numerados; el pedido es de {x} a {y}. Empieza cada plano con el número (1 | ...).",
+    "conf_no_plano": "Plano {i}: falta {g}.",
+    "conf_um_so": "Plano {i}: {n} opciones de {g}; quédate con una sola.",
+    "conf_variedade": "Solo {n} tipo(s) distinto(s) de {g} en los planos; varía hasta al menos {x}.",
+    "conf_sem_duracao": "Plano {i}: falta la duración en segundos (ej.: 4 s).",
+    "conf_duracao": "Los planos suman {s} s; el pedido es de {x} a {y} s.",
+    "conf_termo": "Falta mencionar {g}.",
+    "conf_mais": "… y {n} más.",
+    "conf_rot": "Pega aquí tu archivo (o carga el .txt):",
+    "conf_conferir": "Verificar",
+    "conf_exemplo": "Ejemplo que pasa",
+    "conf_errado": "Ejemplo con error",
+    "conf_carregar": "Cargar .txt",
+    "conf_baixar": "Descargar el archivo",
+    "conf_limpar": "Limpiar",
+    "conf_video_dur": "El video dura {s} s; el pedido es de {x} a {y} s.",
+    "conf_video_prop": "El video es {w}×{h} ({p}); el pedido es {q}.",
+    "conf_video_larg": "El video tiene {w} px de ancho; el mínimo es {x} px.",
+    "conf_video_ler": "No pude leer este video. Expórtalo en MP4 (H.264) o WebM e inténtalo de nuevo.",
+    "conf_video_rot": "Elige tu video. Se lee aquí en el navegador: no se envía nada.",
+    "conf_video_escolher": "Elegir el video",
+    "conf_video_lendo": "Leyendo el video…"
+  },
+  "icone": "video"
+}

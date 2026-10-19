@@ -1,0 +1,393 @@
+{
+  "slug": "publicar",
+  "num": 8,
+  "menu": "Publish",
+  "titulo": "Publishing a video: caption, thumb, three languages and YouTube",
+  "titulo_curto": "Publishing on YouTube",
+  "minutos": 18,
+  "lead": "The factory's last engine takes the finished video to YouTube with title, description, tags, cover and captions. yt-pubx has a dry-run mode that builds everything and stops before sending. In this lesson you do a dry run with no model and no account, see the most common error and close the course with the plan for your first video.",
+  "objetivo": "do a dry run of publishing with yt-pubx in --dry-run mode, with no model and no upload, and build the plan for your first video.",
+  "competencias": [
+    "ensaiar-publicacao",
+    "montar-capa-local",
+    "planejar-o-primeiro-video"
+  ],
+  "aprende": [
+    {
+      "icone": "pasta",
+      "t": "Isolate the dry-run configuration with YTPUBX_CONFIG and YTPUBX_DATA"
+    },
+    {
+      "icone": "portao",
+      "t": "When yt-pubx calls a model and how to do a dry run with none"
+    },
+    {
+      "icone": "marca",
+      "t": "The cover built on your machine from an image and a phrase"
+    },
+    {
+      "icone": "calendario",
+      "t": "The dated plan for your first video, lesson by lesson"
+    }
+  ],
+  "hero_alt": "Three monitors side by side on a dark desk, each showing the same frame of mountains at dusk and a gray caption bar.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "From MP4 to live video",
+      "sub": "Click each step. The last one is yours, outside the course.",
+      "nos": [
+        {
+          "icone": "video",
+          "titulo": "Video",
+          "sub": "MP4 or URL",
+          "detalhe": "A local file or a link. A vertical video becomes a Short on its own and takes no cover."
+        },
+        {
+          "icone": "caneta",
+          "titulo": "Text",
+          "sub": "title and tags",
+          "detalhe": "Title, description and tags by hand (--title, --description, --tags) or written by Codex from --contexto or --legenda. With neither, yt-pubx stops."
+        },
+        {
+          "icone": "marca",
+          "titulo": "Cover",
+          "sub": "thumb",
+          "detalhe": "Ready-made (--thumb), built on your machine (--frase-thumb, --cena-thumb and --thumb-arte) or drawn by Codex. --sem-thumb skips it."
+        },
+        {
+          "icone": "check",
+          "titulo": "Dry run",
+          "sub": "--dry-run",
+          "forte": true,
+          "detalhe": "Builds the plano.json with everything that would be sent and stops: \"--dry-run: nada foi enviado.\" The plan can be reused with --plano."
+        },
+        {
+          "icone": "nuvem",
+          "titulo": "Upload",
+          "sub": "you",
+          "detalhe": "Without --dry-run, it uploads through the YouTube API with your channel's credential (yt-pubx auth). Use --privacy private the first time."
+        }
+      ],
+      "legenda": "yt-pubx 2.4.0 (commit f9842a1, MIT license), read on 10/19/2026. Schedule, queue and channel on autopilot: the From chat to agent program."
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "Dry run with no model and no account",
+      "sub": "The two variables send the config and the jobs to the dry-run folder: your real configuration is not touched. Title, description and tags by hand and --sem-thumb: no model is called.",
+      "blocos": [
+        {
+          "rot": "Terminal · publishing dry run",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a8; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/yt-pubx.git && git -C yt-pubx checkout -q f9842a1\nexport YTPUBX_CONFIG=\"$E/config\" YTPUBX_DATA=\"$E/dados\"\nffmpeg -v error -f lavfi -i color=c=0x0c0c10:s=1280x720:d=5 -f lavfi -i anullsrc=r=48000:cl=stereo -t 5 -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac ensaio.mp4\n./yt-pubx/yt-pubx init > /dev/null; echo \"init: $?\"\n./yt-pubx/yt-pubx publicar ensaio.mp4 --dry-run --sem-thumb \\\n  --title \"Ensaio da fábrica\" --description \"Vídeo de ensaio, 5 s, sem envio.\" --tags \"ensaio,fabrica\" 2>&1 \\\n  | grep -E \"^(TÍTULO|TAGS|THUMB)|nada foi enviado\" | sed \"s/^\\[yt-pubx [0-9:]*\\] //\"; echo \"saída: ${PIPESTATUS[0]}\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>init: 0\nTÍTULO: Ensaio da fábrica\nTAGS: ensaio, fabrica\nTHUMB: None\n--dry-run: nada foi enviado.\nsaída: 0</pre><p>The init creates an example channel (\"principal\") in the dry-run folder. The block cuts the time from the start of the log lines. The plano.json stays in <code>dados/trabalhos/</code>.</p>"
+          },
+          {
+            "rot": "When Codex comes in",
+            "html": "<p>In the code of commit f9842a1: if the title or description is missing, or if the cover is missing (no --thumb, no --sem-thumb and no phrase and scene), yt-pubx asks the Codex on your subscription. In the course dry run, everything is done by hand so nothing leaves your machine.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The most common error",
+      "sub": "With no title, no description and no context, yt-pubx has nothing to write from and stops before calling any model.",
+      "blocos": [
+        {
+          "rot": "Terminal · dry run without text",
+          "icone": "terminal",
+          "conteudo": "cd ${TMPDIR:-/tmp}/ensaio-fabrica/a8\nexport YTPUBX_CONFIG=\"$PWD/config\" YTPUBX_DATA=\"$PWD/dados\"\n./yt-pubx/yt-pubx publicar ensaio.mp4 --dry-run --sem-thumb 2>&1 | grep \"ERRO\" | sed \"s/^\\[yt-pubx [0-9:]*\\] //\"; echo \"saída: ${PIPESTATUS[0]}\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>ERRO: sem --title/--description e sem --contexto/--contexto-arquivo/--legenda: não há do que escrever\nsaída: 1</pre><p>The message already names the three ways out: pass the text by hand, give a context, or give the video's caption file (the last two call Codex).</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The cover composed on your machine",
+      "sub": "One art image, one short phrase and one scene: yt-pubx composes the 1280×720 cover with Pillow, no model needed.",
+      "blocos": [
+        {
+          "rot": "Terminal · local cover",
+          "icone": "terminal",
+          "conteudo": "cd ${TMPDIR:-/tmp}/ensaio-fabrica/a8\nexport YTPUBX_CONFIG=\"$PWD/config\" YTPUBX_DATA=\"$PWD/dados\"\nffmpeg -v error -y -f lavfi -i \"testsrc2=s=1280x720\" -frames:v 1 arte.png\n./yt-pubx/yt-pubx publicar ensaio.mp4 --dry-run --title \"Ensaio da fábrica\" --description \"Vídeo de ensaio, 5 s, sem envio.\" \\\n  --tags \"ensaio,fabrica\" --frase-thumb \"A FÁBRICA\" --cena-thumb \"mesa de edição\" --thumb-arte arte.png 2>&1 \\\n  | grep -E \"^THUMB|nada foi enviado\" | sed -E \"s/^\\[yt-pubx [0-9:]*\\] //; s#/[0-9]{8}-[0-9]{6}-#/<data>-#\"; echo \"saída: ${PIPESTATUS[0]}\"\nf=$(ls dados/trabalhos/*/thumb.jpg | tail -1); python3 -c \"from PIL import Image; print('thumb:', Image.open('$f').size)\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>THUMB: /tmp/ensaio-fabrica/a8/dados/trabalhos/&lt;data&gt;-ensaio-mp4/thumb.jpg\n--dry-run: nada foi enviado.\nsaída: 0\nthumb: (1280, 720)</pre><p>The date and time in the job folder name were replaced with <code>&lt;data&gt;</code>. In this capture the art is an ffmpeg test pattern; in yours, use a frame from your own video.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "Three languages",
+      "sub": "One video per language, each with its own title and its own caption.",
+      "passos": [
+        {
+          "titulo": "Video",
+          "texto": [
+            "explicavideos produces PT, EN and ES when the config lists all three languages and there is a reviewed scenes file for each language (lesson 2). Translating the script and captions: the translator from your subscription, never an unreviewed step."
+          ]
+        },
+        {
+          "titulo": "Captions",
+          "texto": [
+            "One SRT per language. In yt-pubx, --legenda uploads the SRT along with the video; with --sem-legenda it only serves as context."
+          ]
+        },
+        {
+          "titulo": "Publishing",
+          "texto": [
+            "One call per language, with --idioma and the title in that language. If the channel is single-language, the other languages go to the right channel or to the project's player."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "mapa",
+      "titulo": "The map of your first video",
+      "sub": "The deliverables that take a video of yours from idea to publishing dry run. Click a step to see its \"done when\".",
+      "degraus": [
+        {
+          "aula": "mapa",
+          "icone": "alvo",
+          "quando": "Step 1",
+          "titulo": "Engine",
+          "sub": "qual-motor",
+          "saida": "Your case's line on the map, with Use: and the lesson.",
+          "passo": "The lesson 1 map tells you which engine and which lesson. The rest of the plan follows that engine."
+        },
+        {
+          "aula": "explicativo",
+          "icone": "arquivo",
+          "quando": "Step 2",
+          "titulo": "Input",
+          "sub": "scenes or theme",
+          "saida": "The engine's input file, checked.",
+          "passo": "explicavideos scenes (lesson 2), actions.json (lesson 3), docflow theme (lesson 4) or the short's script (lesson 5)."
+        },
+        {
+          "aula": "shorts",
+          "icone": "check",
+          "quando": "Step 3",
+          "titulo": "Gates",
+          "sub": "QA",
+          "saida": "Script and video approved at the engine's gates.",
+          "passo": "Short: qa_roteiro and qa_short (lesson 5). Edited reel: pacing lint (lesson 6). Demo: MP4 checker (lesson 3)."
+        },
+        {
+          "aula": "avatar",
+          "icone": "usuario",
+          "quando": "Step 4",
+          "titulo": "Avatar",
+          "sub": "if any",
+          "saida": "Consent form checked and gate open.",
+          "passo": "Only if the video has an avatar: your consent form and the lesson 7 gate, before any studio."
+        },
+        {
+          "aula": "publicar",
+          "icone": "nuvem",
+          "quando": "Step 5",
+          "titulo": "Dry run",
+          "sub": "dry-run",
+          "saida": "--dry-run: nada foi enviado.",
+          "passo": "This lesson's dry run with your video, your title and your cover. The real upload is yours, with --privacy private the first time."
+        }
+      ],
+      "resultado": {
+        "titulo": "At the end of the course",
+        "texto": "A video of yours run through an INEMA engine, checked at the gates and ready to upload.",
+        "total": "24 exercises"
+      },
+      "legenda": "The engines you don't use for this video are left for the next one: the lesson 1 map is the starting point for every new video."
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "The kit's dry run and the dry run with your video.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Dry run",
+          "min": "5 min",
+          "texto": "Run \"ensaio de publicação\" and \"ensaio sem texto\".",
+          "pronto": "<code>TÍTULO: Ensaio da fábrica</code>, <code>--dry-run: nada foi enviado.</code> with <code>saída: 0</code>, and then <code>ERRO: sem --title/--description e sem --contexto/--contexto-arquivo/--legenda: não há do que escrever</code> with <code>saída: 1</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Local cover",
+          "min": "5 min",
+          "texto": "Run \"capa local\".",
+          "pronto": "<code>--dry-run: nada foi enviado.</code>, <code>saída: 0</code> and <code>thumb: (1280, 720)</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Your video in a dry run",
+          "min": "15 min",
+          "texto": "In the dry-run folder (<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a8</code>), export the two variables as in the block (<code>export YTPUBX_CONFIG=\"$PWD/config\" YTPUBX_DATA=\"$PWD/dados\"</code>) and run the same publicar with a video of your own (the one from lesson 3 will do), your title, your description and your tags.",
+          "pronto": "<code>./yt-pubx/yt-pubx publicar [seu.mp4] --dry-run --sem-thumb --title \"…\" --description \"…\" --tags \"…\" 2>&1 | grep -c \"nada foi enviado\"; echo \"saída: ${PIPESTATUS[0]}\"</code> → <code>1</code> and <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "gerador",
+      "titulo": "Generate your plan with dates",
+      "sub": "Pick a start date and how much time you have per week.",
+      "curso": "The video factory with agents",
+      "horas_padrao": 4,
+      "degraus": [
+        {
+          "titulo": "Lesson 1 · The factory map",
+          "aula": "mapa"
+        },
+        {
+          "titulo": "Lesson 2 · explicavideos inside out",
+          "aula": "explicativo"
+        },
+        {
+          "titulo": "Lesson 3 · App demo",
+          "aula": "demonstracao"
+        },
+        {
+          "titulo": "Lesson 4 · Documentary and your own version",
+          "aula": "documentario"
+        },
+        {
+          "titulo": "Lesson 5 · Shorts with a gate",
+          "aula": "shorts"
+        },
+        {
+          "titulo": "Lesson 6 · Your reel editor",
+          "aula": "edicao"
+        },
+        {
+          "titulo": "Lesson 7 · Avatar and consent",
+          "aula": "avatar"
+        },
+        {
+          "titulo": "Lesson 8 · Publishing to YouTube",
+          "aula": "publicar"
+        }
+      ],
+      "txt": {
+        "titulo": "Plan — The video factory with agents",
+        "inicio": "Start",
+        "ritmo": "Pacing",
+        "termino": "Expected finish",
+        "ate": "by",
+        "pronto": "done when",
+        "semanas": "weeks",
+        "travou": "## What got stuck and the rule I made",
+        "h": "h per week",
+        "exs": "exercises"
+      }
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "sub": "The explanation appears after you answer.",
+      "perguntas": [
+        {
+          "p": "What are YTPUBX_CONFIG and YTPUBX_DATA for in the dry run?",
+          "opcoes": [
+            "To upload the video to YouTube faster.",
+            "To choose the language of the generated description.",
+            "To keep the config and jobs from the dry run in their own folder.",
+            "To turn off Codex in every command."
+          ],
+          "certa": 2,
+          "explica": "The two variables change where yt-pubx reads its config and writes its jobs. The dry run stays isolated; what turns off Codex is passing the text and cover by hand.",
+          "ref": "codigo"
+        },
+        {
+          "p": "Which of these dry runs does NOT call any model?",
+          "opcoes": [
+            "--dry-run with --contexto \"vídeo sobre X\".",
+            "--dry-run with --legenda video.srt and no title.",
+            "--dry-run with just the MP4.",
+            "--dry-run with --title, --description, --tags and --sem-thumb."
+          ],
+          "certa": 3,
+          "explica": "With the text and cover sorted out by hand, there is nothing left for Codex to write. Context or subtitles without a title make yt-pubx ask the model for the text; with just the MP4 you get an error.",
+          "ref": "codigo"
+        },
+        {
+          "p": "You are about to publish for real for the first time. Which option should you use?",
+          "opcoes": [
+            "--privacy private.",
+            "--agendar for one minute from now.",
+            "--sem-thumb always, on every video.",
+            "--manter, to keep the downloaded file."
+          ],
+          "certa": 0,
+          "explica": "Private lets you see the video, the cover and the subtitles on YouTube before anyone else. Then you just change the visibility.",
+          "ref": "diagrama"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "Dry run",
+          "texto": "--dry-run builds everything and stops; YTPUBX_CONFIG and YTPUBX_DATA isolate."
+        },
+        {
+          "t": "No model",
+          "texto": "title, description, tags and cover by hand: nothing leaves the machine."
+        },
+        {
+          "t": "Plan",
+          "texto": "engine, input, gates, avatar if any, dry run: your first video."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Next step",
+      "links": [
+        {
+          "t": "Course 5 of the program: cinematic websites (the video becomes a page)",
+          "href": "https://inematds.github.io/formacao-cinema-ia-sites-v72/en/",
+          "icone": "seta"
+        },
+        {
+          "t": "Schedule, queue and channel on autopilot (From chat to agent program)",
+          "href": "https://inematds.github.io/do-chat-ao-agente-redes-v72/en/",
+          "icone": "calendario"
+        },
+        {
+          "t": "yt-pubx: usage guide",
+          "href": "https://inematds.github.io/yt-pubx/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "This course's kit on GitHub",
+          "href": "https://github.com/inematds/formacao-cinema-ia-fabrica-v72/tree/main/kit",
+          "icone": "git"
+        }
+      ]
+    }
+  ]
+}

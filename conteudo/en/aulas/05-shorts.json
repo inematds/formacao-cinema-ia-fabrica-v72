@@ -1,0 +1,334 @@
+{
+  "slug": "shorts",
+  "num": 5,
+  "menu": "Shorts",
+  "titulo": "Shorts with a quality gate: hook, 9:16 cut and QA",
+  "titulo_curto": "Shorts with a gate",
+  "minutos": 18,
+  "lead": "A short that loses its first three seconds doesn't get a second chance. MakeShorts puts two gates in the way: one on the script, which measures the hook before you record, and one on the video, which measures format, sound and frozen screen before you publish. In this lesson you fail and pass both, using dry-run files.",
+  "objetivo": "write a hook that passes the script gate, and fail or approve a 9:16 video with the makeshorts QA.",
+  "competencias": [
+    "escrever-gancho-em-camadas",
+    "conferir-roteiro-de-short",
+    "conferir-video-vertical"
+  ],
+  "aprende": [
+    {
+      "icone": "alvo",
+      "t": "The three layers of the hook: phrase, scene, and text on frame zero"
+    },
+    {
+      "icone": "portao",
+      "t": "The script gate: short hook, banned opening, keyword up front"
+    },
+    {
+      "icone": "check",
+      "t": "The video gate: 1080×1920, 30 fps, h264/aac, −14 LUFS, no black screen"
+    },
+    {
+      "icone": "camadas",
+      "t": "cardshorts: a narrated card short, five styles"
+    }
+  ],
+  "hero_alt": "A phone locked in vertical on a desk stand showing a blurred frame, next to a monitor with a timeline of short clips.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "The two gates of a short",
+      "sub": "Click each step.",
+      "nos": [
+        {
+          "icone": "alvo",
+          "titulo": "Hook",
+          "sub": "3 layers",
+          "detalhe": "The phrase you say in the first ~2 s, the scene that appears on frame zero, and a very short text on screen. They fire together: someone scrolling with the sound off decides by what they see and read."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Script",
+          "sub": "FALA section",
+          "detalhe": "A Markdown file with the spoken script in the ### FALA section. Promo profile: 60 to 125 words."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Script QA",
+          "sub": "qa_roteiro.py",
+          "detalhe": "Fails a hook longer than 9 words, a banned opening (olá, você sabia, neste vídeo…), and a keyword outside the first 15 words (≈ 5 s). Runs before you spend a render or an avatar."
+        },
+        {
+          "icone": "video",
+          "titulo": "9:16 video",
+          "sub": "cut",
+          "detalhe": "Recording, local voice or avatar, real b-roll, vertical editing. In this course the video is a dry run made with ffmpeg."
+        },
+        {
+          "icone": "check",
+          "titulo": "Video QA",
+          "sub": "qa_short.py",
+          "forte": true,
+          "detalhe": "Measures with ffmpeg: duration for the profile, 1080×1920, 30 fps, h264 and aac, loudness −14 ±1 LUFS, no black screen at the start, frozen stretches. Fails closed: if a measurement can't be made, it fails."
+        }
+      ],
+      "legenda": "makeshorts at commit 52eb799, QA contract 1.2.1."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The hook in three layers",
+      "sub": "Write all three before you record, and check that each one holds up on its own.",
+      "passos": [
+        {
+          "titulo": "Phrase",
+          "texto": [
+            "What you say in the first two seconds. Get straight to it, with minimal context: no introduction."
+          ],
+          "exemplo": {
+            "rot": "Example",
+            "texto": "\"Your video dies in the first three seconds.\""
+          }
+        },
+        {
+          "titulo": "Scene",
+          "texto": [
+            "What appears on frame zero. It has to stop the thumb of someone scrolling with the sound off: a contrast, a number, an object out of place."
+          ]
+        },
+        {
+          "titulo": "Text",
+          "texto": [
+            "A very short summary highlighted on screen. Someone who can't hear the phrase decides by it."
+          ]
+        },
+        {
+          "titulo": "Turn",
+          "texto": [
+            "After the hook, contradict a common belief of the audience. That's what holds them until the proof. The full 7-step reel is in the <a href=\"https://inematds.github.io/do-chat-ao-agente-redes-v72/en/\">social media course</a>."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The script gate",
+      "sub": "Two scripts from the kit: one that passes and one that fails. The keyword is \"gancho\".",
+      "blocos": [
+        {
+          "rot": "File · kit/exemplos/a5-roteiros/fraco.md",
+          "icone": "arquivo",
+          "conteudo": "# Roteiro fraco\n### FALA\nOlá pessoal, hoje eu vou mostrar para vocês uma coisa muito interessante sobre como fazer vídeos curtos que prendem a atenção das pessoas. O gancho tem três camadas: a frase, a cena e o texto. Fica até o fim que no final eu conto o segredo."
+        },
+        {
+          "rot": "Terminal · check the scripts",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\ncd ${TMPDIR:-/tmp}/ensaio-fabrica/a5; Q=makeshorts/.claude/skills/makeshorts/scripts\npython3 $Q/qa_roteiro.py \"$K/exemplos/a5-roteiros/bom.md\" --keyword gancho > bom.txt; echo \"bom: $?\"\npython3 $Q/qa_roteiro.py \"$K/exemplos/a5-roteiros/fraco.md\" --keyword gancho > fraco.txt; echo \"fraco: $?\"\ngrep -hE \"❌|RESULTADO\" bom.txt fraco.txt"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>bom: 0\nfraco: 1\nRESULTADO: APROVADO (falta: teste da lacuna, tese, fontes — revisão humana)\n  ❌ gancho (palavras)        23 palavras: “Olá pessoal, hoje eu vou mostrar para vocês uma coisa muito interessante sobre c” (máx. 9)\n  ❌ abertura proibida        começa com “ola”\n  ❌ palavra-chave no início  “gancho” fora das primeiras 15 palavras (≈ 5 s)\nRESULTADO: REPROVADO</pre><p>The APROVADO on the script flags what the machine doesn't measure: whether the hook opens a gap, whether the thesis takes a side, whether the facts have sources. That part is up to you.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The video gate",
+      "sub": "The block clones makeshorts at a fixed commit, makes a 20 s dry-run video at 1080×1920 with normalized sound, and runs the QA on the promo profile.",
+      "blocos": [
+        {
+          "rot": "Terminal · QA of a dry-run short",
+          "icone": "terminal",
+          "conteudo": "E=${TMPDIR:-/tmp}/ensaio-fabrica/a5; rm -rf \"$E\"; mkdir -p \"$E\"; cd \"$E\"\ngit clone -q https://github.com/inematds/makeshorts.git && git -C makeshorts checkout -q 52eb799\nQ=makeshorts/.claude/skills/makeshorts/scripts\nffmpeg -v error -f lavfi -i \"testsrc2=s=1080x1920:r=30:d=20\" -f lavfi -i \"sine=f=220:d=20\" \\\n  -af loudnorm=I=-14:TP=-2:LRA=7 -ar 48000 -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest ensaio-916.mp4\npython3 $Q/qa_short.py ensaio-916.mp4 --profile divulgacao > qa.txt; echo \"saída: $?\"\ngrep -E \"^(✅|⚠️|❌)|RESULTADO\" qa.txt"
+        },
+        {
+          "rot": "Terminal · the same QA on a 16:9 video",
+          "icone": "terminal",
+          "conteudo": "cd ${TMPDIR:-/tmp}/ensaio-fabrica/a5; Q=makeshorts/.claude/skills/makeshorts/scripts\nffmpeg -v error -y -f lavfi -i \"testsrc2=s=1920x1080:r=30:d=20\" -f lavfi -i \"sine=f=220:d=20\" \\\n  -af loudnorm=I=-14:TP=-2:LRA=7 -ar 48000 -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest ensaio-169.mp4\npython3 $Q/qa_short.py ensaio-169.mp4 --profile divulgacao > qa169.txt; echo \"saída: $?\"\ngrep -E \"^❌|RESULTADO\" qa169.txt"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>saída: 0\n✅ duração                  20.0s\n✅ formato                  1080x1920\n✅ fps                      30.00\n✅ codec vídeo              h264\n✅ codec áudio              aac\n✅ loudness                 -13.9 LUFS\n✅ sem tela preta inicial   imagem desde o frame 0\n✅ frame 0 (informação)     0.063 de bordas\n⚠️  trechos parados          1 acima de 4 s: 0.0–20.0s — justificar ou quebrar\n⚠️  legendas                 não verificadas (passe --srt ou --words); reel sem legenda conferida não vai pro Nei\nRESULTADO: APROVADO (falta a revisão humana: gancho, prova, pronúncia)</pre><p>The numbers (−13.9 LUFS, 0.063 of edges) are from this machine, ffmpeg 6.1.1; on yours they may vary a little. What matters is the RESULTADO line. The captions warning refers to Nei's flow: in yours, pass <code>--srt</code>.</p>"
+          },
+          {
+            "rot": "16:9 fails (captured)",
+            "html": "<pre>saída: 1\n❌ formato                  1920x1080\nRESULTADO: REPROVADO</pre><p>Only the format failed: the rest of the video is the same. A horizontal video doesn't become a short by renaming the file.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "passos",
+      "titulo": "The contract's three profiles",
+      "sub": "Duration in seconds and spoken words, from references/reel-profiles.json (contract 1.2.1).",
+      "passos": [
+        {
+          "titulo": "divulgacao",
+          "texto": [
+            "Minimum 15 s, ideal 20 to 50 s, maximum 59 s. Speech of 60 to 125 words."
+          ]
+        },
+        {
+          "titulo": "tutorial",
+          "texto": [
+            "Minimum 25 s, ideal 35 to 60 s, maximum 75 s. Speech of 90 to 150 words."
+          ]
+        },
+        {
+          "titulo": "mini-aula",
+          "texto": [
+            "Minimum 45 s, ideal 60 to 110 s, maximum 119 s. Speech of 150 to 280 words."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "The second engine: cardshorts",
+      "sub": "roteiro.yaml becomes a narrated 9:16 card short. MIT license. To render, it needs a local voice and image (inemavox and an image server with a GPU); here you only list the styles.",
+      "blocos": [
+        {
+          "rot": "Terminal · cardshorts styles",
+          "icone": "terminal",
+          "conteudo": "cd ${TMPDIR:-/tmp}/ensaio-fabrica/a5\ngit clone -q https://github.com/inematds/cardshorts.git && git -C cardshorts checkout -q d7f5c6d\ncd cardshorts && python3 cardshorts.py estilos | grep -E \"^[a-z]\" \ngrep -E \"^(estilo|max_seg):\" exemplos/versus/roteiro.yaml"
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Captured output (10/19/2026)",
+            "html": "<pre>celular    celular — interface de telefone: notificação, busca, fila e enquete SIM/NÃO\ncracha     cracha — alvo, crachás carimbados e cédula; fundo grafite, acento vermelho\ndocumento  documento — papel datilografado, formulário em branco, carimbos e certificado\nextrato    extrato — nota fiscal / extrato bancário com borda picotada e carimbos\nversus     versus — editorial preto e branco com vermelho; foto x foto, telas divididas, chamadas em Anton\nestilo: versus\nmax_seg: 30          # a velocidade da fala é ajustada para caber (até 1,2x)</pre><p>The max_seg is a ceiling: speech is sped up to 1.2× to fit and, if it still doesn't fit, the engine fails instead of cutting.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Practice",
+      "sub": "The two gates, first with the kit, then with your script.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Video QA",
+          "min": "5 min",
+          "texto": "Run \"QA of a rehearsal short\" and \"the same QA on a 16:9 video\".",
+          "pronto": "<code>RESULTADO: APROVADO (falta a revisão humana: gancho, prova, pronúncia)</code> with <code>saída: 0</code>, and then <code>❌ formato                  1920x1080</code>, <code>RESULTADO: REPROVADO</code> and <code>saída: 1</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · Script QA",
+          "min": "5 min",
+          "texto": "Run \"check the scripts\".",
+          "pronto": "<code>bom: 0</code>, <code>fraco: 1</code> and the line <code>❌ abertura proibida        começa com “ola”</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Your hook",
+          "min": "15 min",
+          "texto": "Write <code>${TMPDIR:-/tmp}/ensaio-fabrica/a5/meu.md</code> with the <code>### FALA</code> section of a short of your own (60 to 125 words) and the three hook layers noted outside the section.",
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a5 && python3 makeshorts/.claude/skills/makeshorts/scripts/qa_roteiro.py meu.md --keyword [sua palavra]; echo \"saída: $?\"</code> → <code>RESULTADO: APROVADO</code> and <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Lesson quiz",
+      "sub": "The explanation appears after you answer.",
+      "perguntas": [
+        {
+          "p": "qa_short.py approved the video. What did it NOT check?",
+          "opcoes": [
+            "Whether the video is 1080×1920.",
+            "Whether the sound is at −14 LUFS.",
+            "Whether there is a black screen at the start.",
+            "Whether the hook is good."
+          ],
+          "certa": 3,
+          "explica": "The RESULTADO itself says it: human review of hook, proof and pronunciation is still missing. The mechanical part of the hook lives in qa_roteiro.py; the quality is up to you.",
+          "ref": "codigo"
+        },
+        {
+          "p": "Why does qa_roteiro.py run before recording?",
+          "opcoes": [
+            "Because it needs the finished video to be able to measure.",
+            "Failing text is free; render and avatar are not.",
+            "Because makeshorts won't let you record without running it first.",
+            "Because it writes the short's script for you."
+          ],
+          "certa": 1,
+          "explica": "It's the same principle as the whole factory: check the cheap file before the expensive step.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Your hook is \"Olá, hoje vou mostrar três truques de edição\" (Portuguese for \"Hello, today I'll show you three editing tricks\"). What does the gate say?",
+          "opcoes": [
+            "Fails for a forbidden opening.",
+            "Passes, because it has fewer than 9 words.",
+            "Passes with a CTA warning.",
+            "Fails for lack of music."
+          ],
+          "certa": 0,
+          "explica": "Starting with \"hello\" or \"today I'm going to\" is a banned opening in the contract: it spends the first seconds on an introduction.",
+          "ref": "codigo"
+        },
+        {
+          "p": "In a short, what decides whether someone stops scrolling when they have the sound off?",
+          "opcoes": [
+            "The sentence spoken in the first second.",
+            "The background soundtrack.",
+            "The scene and the text on frame zero.",
+            "The post description on the platform."
+          ],
+          "certa": 2,
+          "explica": "All three layers fire together, but with no sound only the scene and the text get through. That's why the sentence alone isn't enough.",
+          "ref": "passos"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "In three sentences",
+      "itens": [
+        {
+          "t": "Hook",
+          "texto": "sentence, scene, and text on frame zero, each one understandable on its own."
+        },
+        {
+          "t": "Two gates",
+          "texto": "qa_roteiro before recording, qa_short before publishing."
+        },
+        {
+          "t": "Human",
+          "texto": "the machine checks format and rules; gap, thesis, and source are up to you."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Going further",
+      "links": [
+        {
+          "t": "MakeShorts: user guide",
+          "href": "https://inematds.github.io/makeshorts/guia/",
+          "icone": "video"
+        },
+        {
+          "t": "cardshorts: user guide",
+          "href": "https://inematds.github.io/cardshorts/guia/",
+          "icone": "camadas"
+        },
+        {
+          "t": "Reel in 7 steps and the channel on autopilot (From chat to agent course)",
+          "href": "https://inematds.github.io/do-chat-ao-agente-redes-v72/en/",
+          "icone": "megafone"
+        }
+      ]
+    }
+  ]
+}
