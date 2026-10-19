@@ -1,0 +1,4 @@
+ERRO /tmp/ensaio-fabrica/a4/pt-b01-errado.json cena 1: cue não está na fala: 'Faz poucas semanas'
+aviso exemplos/decisions-jev/pt-b02.json cena 7: 'no visible damage' aparece 2x, casa com a 1ª
+1 erro(s) 1 aviso(s)
+saída: 1

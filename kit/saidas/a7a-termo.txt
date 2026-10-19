@@ -1,0 +1,4 @@
+OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027
+saída: 0
+FALTA: Rótulo
+saída: 1

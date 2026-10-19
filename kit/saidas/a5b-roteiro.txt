@@ -1,0 +1,7 @@
+bom: 0
+fraco: 1
+RESULTADO: APROVADO (falta: teste da lacuna, tese, fontes — revisão humana)
+  ❌ gancho (palavras)        23 palavras: “Olá pessoal, hoje eu vou mostrar para vocês uma coisa muito interessante sobre c” (máx. 9)
+  ❌ abertura proibida        começa com “ola”
+  ❌ palavra-chave no início  “gancho” fora das primeiras 15 palavras (≈ 5 s)
+RESULTADO: REPROVADO

@@ -1,0 +1,7 @@
+OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027
+roteiro: 37 palavras ≈ 16 s a 140 palavras/min
+PORTÃO ABERTO: pode levar ao estúdio (a geração gasta crédito: confira o plano antes)
+saída: 0
+FALTA: Rótulo
+PORTÃO FECHADO: corrija o termo antes de gerar
+saída: 1

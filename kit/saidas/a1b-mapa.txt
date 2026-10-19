@@ -1,0 +1,8 @@
+frase         clipe        → musicavideo (fora deste curso (guia da área Vídeos))
+video-pronto  publicar     → yt-pubx (aula 8)
+14 linhas
+Short ou reel 9:16 com gancho
+Use: MakeShorts ou cardshorts · aprender: aula 5
+saída: 0
+SEM MOTOR: com 'tema' a tabela tem: explicativo, documentario, short
+saída: 1

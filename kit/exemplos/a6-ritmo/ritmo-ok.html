@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>html, body { margin: 0; width: 1080px; height: 1920px; background: #0c0c10; color: #f4f4f5; font: 700 96px system-ui; }</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+      <h2 id="b0" class="beat">Beat 1</h2>
+      <h2 id="b1" class="beat">Beat 2</h2>
+      <h2 id="b2" class="beat">Beat 3</h2>
+      <h2 id="b3" class="beat">Beat 4</h2>
+      <h2 id="b4" class="beat">Beat 5</h2>
+      <h2 id="b5" class="beat">Beat 6</h2>
+      <h2 id="b6" class="beat">Beat 7</h2>
+      <h2 id="b7" class="beat">Beat 8</h2>
+      <h2 id="b8" class="beat">Beat 9</h2>
+      <h2 id="b9" class="beat">Beat 10</h2>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#b0", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 0);
+      tl.fromTo("#b1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 1.5);
+      tl.fromTo("#b2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 3);
+      tl.fromTo("#b3", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 4.5);
+      tl.fromTo("#b4", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 6);
+      tl.fromTo("#b5", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 7.5);
+      tl.fromTo("#b6", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 9);
+      tl.fromTo("#b7", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 10.5);
+      tl.fromTo("#b8", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 12);
+      tl.fromTo("#b9", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5 }, 13.5);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

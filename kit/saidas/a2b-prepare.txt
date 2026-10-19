@@ -1,0 +1,15 @@
+{"blocks": 2, "scenes": 4, "topics": 0, "chars": 561}
+saída: 0
+/tmp/ensaio-fabrica/a2/saida/blocos:
+manifest.json
+pt-b01.txt
+pt-b02.txt
+
+/tmp/ensaio-fabrica/a2/saida/templates/pt:
+scene-01.html
+scene-02.html
+scene-03.html
+scene-04.html
+{
+  "submitted": {
+    "prepared": 2

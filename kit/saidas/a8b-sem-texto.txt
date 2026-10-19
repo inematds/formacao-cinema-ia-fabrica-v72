@@ -1,0 +1,2 @@
+ERRO: sem --title/--description e sem --contexto/--contexto-arquivo/--legenda: não há do que escrever
+saída: 1

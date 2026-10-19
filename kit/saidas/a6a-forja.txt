@@ -1,0 +1,15 @@
+skill/forja-reel/assets/motor-scripts:
+captions.py
+cut.py
+fal-gen.py
+islands.py
+lint-timeline.py
+make-sfx.sh
+mix-sfx.py
+verify-cut.py
+
+skill/forja-reel/references:
+01-entrevista.md
+02-diagnostico-de-ambiente.md
+03-geracao.md
+04-modelo-skill-filha.md

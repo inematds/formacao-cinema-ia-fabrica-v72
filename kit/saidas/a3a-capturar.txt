@@ -1,0 +1,7 @@
+captura: 0
+00-home.png
+01-minutos.png
+02-ritmo.png
+03-calcular.png
+04-resultado.png
+passos no steps.json: 5

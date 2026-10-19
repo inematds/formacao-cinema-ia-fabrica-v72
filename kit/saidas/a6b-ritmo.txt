@@ -1,0 +1,6 @@
+Duração 15.00s · 1080x1920 · 10 beats · densidade média 5.33 beats/10s
+saída: 0
+Duração 15.00s · 1080x1920 · 5 beats · densidade média 2.67 beats/10s
+ERRORS
+L2.50 ERROR Buraco de 6.5s entre 2.5s e 9.0s — coloque um beat (snap/selo/B-roll) sincronizado com uma palavra-âncora
+saída: 1

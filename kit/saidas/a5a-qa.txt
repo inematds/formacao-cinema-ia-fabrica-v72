@@ -1,0 +1,12 @@
+saída: 0
+✅ duração                  20.0s
+✅ formato                  1080x1920
+✅ fps                      30.00
+✅ codec vídeo              h264
+✅ codec áudio              aac
+✅ loudness                 -13.9 LUFS
+✅ sem tela preta inicial   imagem desde o frame 0
+✅ frame 0 (informação)     0.063 de bordas
+⚠️  trechos parados          1 acima de 4 s: 0.0–20.0s — justificar ou quebrar
+⚠️  legendas                 não verificadas (passe --srt ou --words); reel sem legenda conferida não vai pro Nei
+RESULTADO: APROVADO (falta a revisão humana: gancho, prova, pronúncia)

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Minutos de vídeo</title>
+<style>
+  body { margin: 0; background: #0c0c10; color: #f4f4f5; font: 18px/1.5 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 80px auto; padding: 0 24px; }
+  h1 { font-size: 34px; margin: 0 0 8px; }
+  p { color: #a1a1aa; margin: 0 0 28px; }
+  label { display: block; margin: 18px 0 6px; color: #d4d4d8; }
+  input { width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 18px; background: #18181b; color: #f4f4f5; border: 1px solid #3f3f46; border-radius: 8px; }
+  button { margin-top: 24px; padding: 12px 22px; font-size: 18px; background: #e9b949; color: #0c0c10; border: 0; border-radius: 8px; cursor: pointer; }
+  h2 { margin: 36px 0 0; font-size: 26px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Minutos de vídeo</h1>
+  <p>Quantas palavras cabem na sua narração?</p>
+  <label for="min">Duração do vídeo (minutos)</label>
+  <input id="min" name="min" type="number" value="1">
+  <label for="ppm">Ritmo da fala (palavras por minuto)</label>
+  <input id="ppm" name="ppm" type="number" value="150">
+  <button type="button" onclick="calcular()">Calcular</button>
+  <h2 id="res"></h2>
+</main>
+<script>
+function calcular() {
+  const n = Math.round(document.getElementById('min').value * document.getElementById('ppm').value);
+  document.getElementById('res').textContent = 'Cabem ' + n + ' palavras';
+}
+</script>
+</body>
+</html>

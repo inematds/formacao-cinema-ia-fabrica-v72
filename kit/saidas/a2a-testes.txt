@@ -1,0 +1,6 @@
+2.13.10
+  prepare   monta cenas, blocos (<= 4.400 caracteres) e templates. Não gera nada no HeyGen.
+  preview   renderiza o bloco 1 localmente, sem avatar, para conferir o layout.
+saída: 0
+Ran 50 tests
+OK

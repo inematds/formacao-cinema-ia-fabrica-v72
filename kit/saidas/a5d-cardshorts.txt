@@ -1,0 +1,7 @@
+celular    celular — interface de telefone: notificação, busca, fila e enquete SIM/NÃO
+cracha     cracha — alvo, crachás carimbados e cédula; fundo grafite, acento vermelho
+documento  documento — papel datilografado, formulário em branco, carimbos e certificado
+extrato    extrato — nota fiscal / extrato bancário com borda picotada e carimbos
+versus     versus — editorial preto e branco com vermelho; foto x foto, telas divididas, chamadas em Anton
+estilo: versus
+max_seg: 30          # a velocidade da fala é ajustada para caber (até 1,2x)

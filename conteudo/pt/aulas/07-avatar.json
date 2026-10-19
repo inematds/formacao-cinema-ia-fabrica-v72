@@ -1,0 +1,268 @@
+{
+  "slug": "avatar",
+  "num": 7,
+  "menu": "Avatar",
+  "titulo": "Avatar falante: estúdio, voz e consentimento",
+  "titulo_curto": "Avatar e consentimento",
+  "minutos": 14,
+  "lead": "Avatar falante é o passo mais caro da fábrica e o mais sensível: é o rosto e a voz de uma pessoa. Nesta aula você entende como o estúdio entra no pipeline e escreve duas peças suas: o termo de uso do avatar e um portão que não deixa nenhuma geração começar sem termo válido.",
+  "objetivo": "escrever o termo de uso do seu avatar e pôr um portão que fecha qualquer geração sem termo válido.",
+  "competencias": [
+    "escrever-termo-de-consentimento",
+    "conferir-termo-por-script",
+    "fechar-geracao-sem-termo"
+  ],
+  "aprende": [
+    {
+      "icone": "usuario",
+      "t": "De quem pode ser o avatar: só da própria pessoa, com termo"
+    },
+    {
+      "icone": "arquivo",
+      "t": "Os sete campos do termo: pessoa, o que autoriza, uso, idiomas, validade, revogação e rótulo"
+    },
+    {
+      "icone": "portao",
+      "t": "Um portão em script antes do estúdio, porque o do motor é só regra escrita"
+    },
+    {
+      "icone": "relogio",
+      "t": "Avatar V do HeyGen como exemplo datado (abr/2026), não como passo fixo"
+    }
+  ],
+  "hero_alt": "Canto de gravação com câmera de cinema no tripé apontada para uma cadeira vazia diante de fundo cinza, e um termo de autorização com texto ilegível sobre a mesa.",
+  "secoes": [
+    {
+      "tipo": "diagrama",
+      "titulo": "O caminho até o estúdio",
+      "sub": "Clique em cada etapa. O estúdio só abre depois do portão.",
+      "nos": [
+        {
+          "icone": "usuario",
+          "titulo": "Pessoa",
+          "sub": "a própria",
+          "detalhe": "O avatar é de quem aparece e fala, e de mais ninguém. Nada de rosto ou voz de outra pessoa, de figura pública ou de personagem real."
+        },
+        {
+          "icone": "arquivo",
+          "titulo": "Termo",
+          "sub": "7 campos",
+          "detalhe": "Texto simples, uma linha por campo: Pessoa, Autoriza, Uso, Idiomas, Validade, Revogação, Rótulo."
+        },
+        {
+          "icone": "check",
+          "titulo": "Conferidor",
+          "sub": "script",
+          "detalhe": "conferir-consentimento.py reprova campo faltando, rótulo sem \"IA\" e termo vencido. Sai 0 só quando tudo bate."
+        },
+        {
+          "icone": "portao",
+          "titulo": "Portão",
+          "sub": "antes do start",
+          "forte": true,
+          "detalhe": "portao-avatar.sh roda o conferidor e estima a duração do roteiro. Se o termo não passa, para com código 1 e nada segue."
+        },
+        {
+          "icone": "video",
+          "titulo": "Estúdio",
+          "sub": "crédito",
+          "detalhe": "A geração em si: estúdio do serviço de avatar, pela conta de quem é dono do avatar. Fica fora deste curso."
+        }
+      ],
+      "legenda": "O explicavideos e o refazvideo pedem o arquivo APROVADO_HEYGEN antes do start, mas o código não confere. O portão desta aula é o que fecha de verdade."
+    },
+    {
+      "tipo": "passos",
+      "titulo": "O estúdio, em out/2026",
+      "sub": "Exemplo datado: nomes e recursos mudam. O que não muda é o termo.",
+      "passos": [
+        {
+          "titulo": "HeyGen",
+          "texto": [
+            "Avatar V, apresentado em abr/2026: identidade criada a partir de uns 15 s de gravação, separando identidade de aparência; em mai/2026, direção de movimento em linguagem natural (pesquisa §3). É o estúdio que os motores do INEMA usam, pela assinatura."
+          ]
+        },
+        {
+          "titulo": "Outros",
+          "texto": [
+            "Synthesia Express-2 (set/2025, corpo inteiro). Hedra Omnia e OmniHuman 1.5 aparecem em fontes secundárias: relatados, não confirmados em fonte oficial em 19/10/2026."
+          ]
+        },
+        {
+          "titulo": "Lip sync",
+          "texto": [
+            "Nos geradores com áudio nativo, a boca sai junto com a fala. Nos avatares, o estúdio sincroniza a partir do áudio ou do texto. Geradores e áudio nativo: <a href=\"https://inematds.github.io/formacao-cinema-ia-geracao-v72/\">curso 1</a>."
+          ]
+        },
+        {
+          "titulo": "Rótulo e lei",
+          "texto": [
+            "Rótulo de conteúdo gerado por IA, direito de imagem e voz e o AI Act são do <a href=\"https://inematds.github.io/formacao-cinema-ia-producao-v72/aulas/etica/\">curso 2, aula 7</a>. Aqui o termo só exige que o rótulo exista e cite IA."
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "O termo",
+      "sub": "Exemplo fictício no kit. O seu é igual, com os seus dados.",
+      "blocos": [
+        {
+          "rot": "Arquivo · kit/exemplos/a7-termo/termo.md",
+          "icone": "arquivo",
+          "conteudo": "# Termo de uso de avatar e voz (exemplo fictício)\nPessoa: Ana Exemplo\nAutoriza: a própria Ana, dona do canal, autoriza avatar com o rosto dela e a voz clonada dela\nUso: vídeos dos cursos gratuitos do canal dela e cortes desses vídeos\nIdiomas: português, inglês e espanhol\nValidade: 31/12/2027\nRevogação: pedido por escrito; vídeos novos param no mesmo dia, os publicados saem em até 30 dias\nRótulo: \"Avatar e voz gerados por IA com autorização de Ana Exemplo\" no canto do vídeo e na descrição"
+        },
+        {
+          "rot": "Terminal · conferir o termo",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit\npython3 \"$K/conferir-consentimento.py\" \"$K/exemplos/a7-termo/termo.md\"; echo \"saída: $?\"\npython3 \"$K/conferir-consentimento.py\" \"$K/exemplos/a7-termo/termo-sem-rotulo.md\"; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Saída capturada (19/10/2026)",
+            "html": "<pre>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027\nsaída: 0\nFALTA: Rótulo\nsaída: 1</pre><p>O segundo arquivo é o mesmo termo sem a linha Rótulo. Os rótulos dos campos também valem em inglês e espanhol (Person, Label, Etiqueta…).</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "codigo",
+      "titulo": "O portão",
+      "sub": "O script não chama estúdio nenhum: só decide se você pode abrir o estúdio e quantos segundos vai pedir.",
+      "blocos": [
+        {
+          "rot": "Arquivo · kit/portao-avatar.sh",
+          "icone": "arquivo",
+          "conteudo": "#!/usr/bin/env bash\n# portao-avatar.sh — porta de entrada de qualquer geração de avatar: sem termo conferido, nada segue.\n# Uso: bash portao-avatar.sh <termo.md> <roteiro.txt>\n# Não chama estúdio nenhum: só decide se você PODE abrir o estúdio, e quantos minutos vai pedir.\nK=$(cd \"$(dirname \"$0\")\" && pwd)\ntermo=\"${1:?uso: portao-avatar.sh <termo.md> <roteiro.txt>}\"; roteiro=\"${2:?falta o roteiro}\"\npython3 \"$K/conferir-consentimento.py\" \"$termo\" || { echo \"PORTÃO FECHADO: corrija o termo antes de gerar\"; exit 1; }\np=$(wc -w < \"$roteiro\")\necho \"roteiro: $p palavras ≈ $(( (p * 60 + 139) / 140 )) s a 140 palavras/min\"\necho \"PORTÃO ABERTO: pode levar ao estúdio (a geração gasta crédito: confira o plano antes)\""
+        },
+        {
+          "rot": "Terminal · portão aberto e fechado",
+          "icone": "terminal",
+          "conteudo": "K=~/projetos/formacao-cinema-ia-fabrica-v72/kit; X=$K/exemplos/a7-termo\nbash \"$K/portao-avatar.sh\" \"$X/termo.md\" \"$X/roteiro.txt\"; echo \"saída: $?\"\nbash \"$K/portao-avatar.sh\" \"$X/termo-sem-rotulo.md\" \"$X/roteiro.txt\"; echo \"saída: $?\""
+        }
+      ],
+      "saida": {
+        "selo": "real",
+        "abas": [
+          {
+            "rot": "Saída capturada (19/10/2026)",
+            "html": "<pre>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027\nroteiro: 37 palavras ≈ 16 s a 140 palavras/min\nPORTÃO ABERTO: pode levar ao estúdio (a geração gasta crédito: confira o plano antes)\nsaída: 0\nFALTA: Rótulo\nPORTÃO FECHADO: corrija o termo antes de gerar\nsaída: 1</pre><p>Ponha a chamada do portão como primeira linha do seu script de produção, antes do start: com <code>set -e</code>, o código 1 para tudo.</p>"
+          }
+        ]
+      }
+    },
+    {
+      "tipo": "pratica",
+      "titulo": "Prática",
+      "sub": "O seu termo e o seu portão.",
+      "exercicios": [
+        {
+          "id": "e1",
+          "titulo": "E1 · Conferidor",
+          "min": "5 min",
+          "texto": "Rode \"conferir o termo\".",
+          "pronto": "<code>OK: termo de Ana Exemplo · 7 campos · válido até 31/12/2027</code> com <code>saída: 0</code>, e <code>FALTA: Rótulo</code> com <code>saída: 1</code>."
+        },
+        {
+          "id": "e2",
+          "titulo": "E2 · O seu termo",
+          "min": "15 min",
+          "texto": "Escreva <code>~/meu-termo.md</code> com os sete campos, com os seus dados e a validade que fizer sentido para você.",
+          "pronto": "<code>python3 ~/projetos/formacao-cinema-ia-fabrica-v72/kit/conferir-consentimento.py ~/meu-termo.md; echo \"saída: $?\"</code> → <code>OK: termo de [seu nome] · 7 campos · válido até …</code> e <code>saída: 0</code>."
+        },
+        {
+          "id": "e3",
+          "titulo": "E3 · Portão no seu roteiro",
+          "min": "5 min",
+          "texto": "Rode o portão com o seu termo e um roteiro seu em texto.",
+          "pronto": "<code>bash ~/projetos/formacao-cinema-ia-fabrica-v72/kit/portao-avatar.sh ~/meu-termo.md [seu-roteiro.txt]; echo \"saída: $?\"</code> → <code>PORTÃO ABERTO</code> e <code>saída: 0</code>."
+        }
+      ]
+    },
+    {
+      "tipo": "quiz",
+      "titulo": "Teste da aula",
+      "sub": "A explicação aparece depois da sua resposta.",
+      "perguntas": [
+        {
+          "p": "Um cliente pede um vídeo com o avatar de um apresentador famoso. O que o termo desta aula permite?",
+          "opcoes": [
+            "Pode, se o vídeo levar rótulo de IA.",
+            "Pode, se for para curso gratuito.",
+            "Pode, se o cliente assinar o termo no lugar dele.",
+            "Não: o avatar é só da própria pessoa, com termo dela."
+          ],
+          "certa": 3,
+          "explica": "O campo Pessoa é quem aparece e fala, e é essa pessoa que autoriza. Rótulo não substitui consentimento.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "Por que pôr um portão em script se o motor já pede APROVADO_HEYGEN?",
+          "opcoes": [
+            "O arquivo do motor não é conferido pelo código.",
+            "Porque o HeyGen exige um script bash para gerar.",
+            "Porque o portão deixa o avatar mais barato no estúdio.",
+            "Porque o APROVADO_HEYGEN expira sozinho em 24 h."
+          ],
+          "certa": 0,
+          "explica": "Regra que depende de alguém lembrar falha no dia corrido. Script que sai com código 1 fecha de verdade.",
+          "ref": "diagrama"
+        },
+        {
+          "p": "O conferidor responde \"VENCIDO: validade 31/12/2025\". O que fazer?",
+          "opcoes": [
+            "Mudar a data no arquivo e seguir com a produção.",
+            "Pedir à pessoa um termo novo.",
+            "Apagar a linha Validade para o script não olhar.",
+            "Rodar o estúdio com --force e ver o que acontece."
+          ],
+          "certa": 1,
+          "explica": "Validade é parte do que a pessoa autorizou. Termo novo, assinado por ela, e só então o portão abre.",
+          "ref": "codigo"
+        }
+      ]
+    },
+    {
+      "tipo": "resumo",
+      "titulo": "Em três frases",
+      "itens": [
+        {
+          "t": "Pessoa",
+          "texto": "avatar e voz são da própria pessoa, com termo dela."
+        },
+        {
+          "t": "Termo",
+          "texto": "sete campos, conferidos por script, com rótulo que cita IA."
+        },
+        {
+          "t": "Portão",
+          "texto": "código 1 sem termo válido; o estúdio só depois."
+        }
+      ]
+    },
+    {
+      "tipo": "links",
+      "titulo": "Para ir além",
+      "links": [
+        {
+          "t": "HeyGen: apresentação do Avatar V (abr/2026)",
+          "href": "https://www.heygen.com/en-ca/events/introducing-avatar-v-a-live-walkthrough-of-heygens-most-advanced-ai-avatar-model-yet",
+          "icone": "video"
+        },
+        {
+          "t": "Curso 2, aula 7: ética e lei (rótulo, imagem, voz)",
+          "href": "https://inematds.github.io/formacao-cinema-ia-producao-v72/aulas/etica/",
+          "icone": "escudo"
+        },
+        {
+          "t": "Comissão Europeia: código de prática de marcação de conteúdo gerado por IA",
+          "href": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content",
+          "icone": "lista"
+        }
+      ]
+    }
+  ]
+}

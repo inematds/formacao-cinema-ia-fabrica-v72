@@ -1,0 +1,4 @@
+init: 0
+falas: 6
+6
+index.html gerado · 1920x1080 · TOTAL=30.389s · 6 cenas (5 passos + CTA)

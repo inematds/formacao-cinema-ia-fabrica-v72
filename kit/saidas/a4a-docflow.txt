@@ -1,0 +1,12 @@
+0.8.0
+docflow 0.8.0 · estilos (use `estilo: <nome>` no tema)
+
+  documentario
+    Documentário narrado com cenas geradas por IA (imagem -> vídeo), ritmo calmo.
+slug: egito-antigo
+estilo: "realistic cinematic documentary, natural golden light, 35mm film look"
+duracao_total: 60
+duracao_cena: 10
+formato: "16:9"
+motor: agnes          # flow | agnes | local
+voz: nei              # voz do inemavox (chatterbox): nei, nei2, bella...

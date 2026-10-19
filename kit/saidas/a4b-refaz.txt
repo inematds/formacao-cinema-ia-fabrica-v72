@@ -1,0 +1,4 @@
+1.4.1
+aviso exemplos/decisions-jev/pt-b02.json cena 7: 'no visible damage' aparece 2x, casa com a 1ª
+OK 1 aviso(s)
+saída: 0

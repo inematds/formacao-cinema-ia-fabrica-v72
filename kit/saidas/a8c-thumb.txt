@@ -1,0 +1,4 @@
+THUMB: /tmp/ensaio-fabrica/a8/dados/trabalhos/<data>-ensaio-mp4/thumb.jpg
+--dry-run: nada foi enviado.
+saída: 0
+thumb: (1280, 720)

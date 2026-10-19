@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:18791/",
+  "viewport": [1280, 800],
+  "window": { "top": 96, "titleH": 52, "urlLabel": "127.0.0.1:18791" },
+  "eyebrow": "DEMONSTRAÇÃO · MINUTOS DE VÍDEO",
+  "ctaNarration": "Pronto: agora você sabe quantas palavras cabem no seu vídeo.",
+  "ctaCaption": "Roteiro do tamanho certo",
+  "steps": [
+    { "id": "home", "intro": true, "caption": "Minutos de vídeo · do zero", "narration": "Este app diz quantas palavras cabem numa narração. Vamos usar em três cliques." },
+    { "id": "minutos", "do": { "type": "setValue", "selector": "#min", "value": "3" }, "target": "#min", "caption": "1 · Duração: 3 minutos", "narration": "Primeiro, a duração do vídeo: três minutos." },
+    { "id": "ritmo", "do": { "type": "setValue", "selector": "#ppm", "value": "140" }, "target": "#ppm", "caption": "2 · Ritmo: 140 palavras por minuto", "narration": "Depois, o ritmo da fala. Uma narração calma fica perto de cento e quarenta palavras por minuto." },
+    { "id": "calcular", "do": { "type": "clickText", "tag": "button", "text": "Calcular" }, "target": { "tag": "button", "text": "Calcular" }, "click": true, "caption": "3 · Calcular", "narration": "Agora é só clicar em calcular." },
+    { "id": "resultado", "target": "#res", "zoom": true, "caption": "Cabem 420 palavras", "narration": "Cabem quatrocentas e vinte palavras. Esse é o tamanho do seu roteiro." }
+  ]
+}
