@@ -199,7 +199,7 @@
           "titulo": "E3 · Your topic",
           "min": "15 min",
           "texto": "Copy temas/egito.yaml to <code>temas/meu-tema.yaml</code> in the dry-run clone and change slug, theme, estilo, voice and the durations for a documentary of your own with 6 to 8 scenes. Do not run roteiro or gerar.",
-          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas')\"</code> → your slug and a number from 6 to 8 followed by <code>cenas</code>."
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas', 'voz própria' if t['voz'] != 'nei' else 'voz do Nei')\"</code> → your slug and a number from 6 to 8 followed by <code>cenas voz própria</code>."
         }
       ]
     },

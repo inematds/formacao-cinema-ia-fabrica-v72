@@ -199,7 +199,7 @@
           "titulo": "E3 · Tu tema",
           "min": "15 min",
           "texto": "Copia temas/egito.yaml a <code>temas/meu-tema.yaml</code> en el clon del ensayo y cambia slug, tema, estilo, voz y las duraciones para un documental tuyo de 6 a 8 escenas. No corras roteiro ni gerar.",
-          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas')\"</code> → tu slug y un número de 6 a 8 seguido de <code>cenas</code>."
+          "pronto": "<code>cd ${TMPDIR:-/tmp}/ensaio-fabrica/a4/docflow && python3 -c \"import yaml; t=yaml.safe_load(open('temas/meu-tema.yaml')); print(t['slug'], t['duracao_total'] // t['duracao_cena'], 'cenas', 'voz própria' if t['voz'] != 'nei' else 'voz do Nei')\"</code> → tu slug y un número de 6 a 8 seguido de <code>cenas voz própria</code>."
         }
       ]
     },
